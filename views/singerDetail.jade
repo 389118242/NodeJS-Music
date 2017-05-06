@@ -1,0 +1,191 @@
+//
+   Created by Win on 2017/3/17.
+extends layout
+block otherHead
+    link(rel="stylesheet",href="/css/pop.css",type="text/css")
+    style.
+        .modal {
+            right: 0;
+            overflow: auto;
+            outline: 0;
+        }
+block body
+    body
+        section.vbox
+            section
+                section.hbox.stretch
+                    section#content
+                        section#bjax-el.vbox
+                            section.scrollable.wrapper-lg
+                                div.row
+                                    div.col-sm-8
+                                        div.panel.wrapper-lg
+                                            div.row
+                                                div.col-sm-5
+                                                    img.img-full.m-b(src="#{singer.img}")
+                                                div.col-sm-7
+                                                    h4.m-t-none.text-black=singer.singerName
+                                                    p=singer.singerDetail
+                                                div#myModal(role="dialog",tabindex="-1",aria-labelledby="myModalLabel",aria-hidden="true",class="modal fade auto-1473474137786 m-layer z-show m-layer-w2",style="top: initial; left: initial;")
+                                                    div#auto-id-bpDfekqTEA8M9tat.zbar
+                                                        button(type="button" class="close",data-dismiss="modal",aria-hidden="true",style="background-color: white; color: black") &times;
+                                                        div.zttl 添加到歌单
+                                                    div.zcnt
+                                                        div(class="lyct lyct-1 m-favgd f-cb")
+                                                            div(class="tit j-flag",id="auto-id-8K3DJpfGaGK7ICMf")
+                                                                i.u-icn.u-icn-33
+                                                                | 新歌单
+                                                            div(class="j-flag",id="auto-id-lH2ZTJaEJry8z8NG")
+                                                                ul
+                                                                    li(data-id="174140198",class="xtag")
+                                                                        div.item.f-cb
+                                                                            div.left
+                                                                                a(href="javascript:void(0)",class="avatar",target="_blank")
+                                                                                    img(alt="",src="http://p4.music.126.net/zPaZBLAigYIxYHg28VABdg==/3286440256922472.jpg?param=40y40")
+                                                                            p.name.f-thide
+                                                                                a.s-fc0(href="javascript:void(0)",target="_blank") 我喜欢的音乐
+                                                                            p.s-fc3 2首
+                                                                    li(data-id="459518050",class="xtag")
+                                                                        div.item.f-cb
+                                                                            div.left
+                                                                                a(href="javascript:void(0)",class="avatar",target="_blank")
+                                                                                    img(alt="",src="http://p4.music.126.net/cU7izHzkhfLXOVVsd5Oobw==/5832909185361985.jpg?param=40y40")
+                                                                            p.name.f-thide
+                                                                                a.s-fc0(href="javascript:void(0)",target="_blank") 林俊杰
+                                                                            p.s-fc3 14首
+                                                                    li(data-id="452454259",class="xtag")
+                                                                        div.item.f-cb
+                                                                            div.left
+                                                                                a(href="javascript:void(0)",class="avatar",target="_blank")
+                                                                                    img(alt="",src="http://p3.music.126.net/cU7izHzkhfLXOVVsd5Oobw==/5832909185361985.jpg?param=40y40")
+                                                                            p.name.f-thide
+                                                                                a.s-fc0(href="javascript:void(0)",target="_blank") 跑步
+                                                                            p.s-fc3 14首
+                                                                    li(data-id="387988392",class="xtag")
+                                                                        div.item.f-cb
+                                                                            div.left
+                                                                                a(href="javascript:void(0)",class="avatar",target="_blank")
+                                                                                    img(alt="",src="http://p4.music.126.net/pVqkX6H0FWZwNdonDc_2uA==/7865906185633611.jpg?param=40y40")
+                                                                            p.name.f-thide
+                                                                                a.s-fc0(href="javascript:void(0)",target="_blank") 哈哈
+                                                                            p.s-fc3 10首
+                                                                    li(data-id="174134263",class="xtag")
+                                                                        div.item.f-cb
+                                                                            div.left
+                                                                                a(href="javascript:void(0)",class="avatar",target="_blank")
+                                                                                    img(alt="",src="http://p4.music.126.net/oAG2ZzQJqrmaAmZ45ZSKow==/69269232550727.jpg?param=40y40")
+                                                                            p.name.f-thide
+                                                                                a.s-fc0(href="javascript:void(0)",target="_blank") 刚刚好
+                                                                            p.s-fc3 10首
+                                            h4.m-t-lg.m-b 热门歌曲
+                                            ul.list-group.list-group-lg
+                                                each song in songTop50
+                                                    li.list-group-item
+                                                        div.pull-right.m-l
+                                                            a.m-r-sm(id="#{song.songId}",href="javascript:void(0);",class="addMusicToList")
+                                                                i.icon-plus
+                                                            a.m-r-sm(href="javascript:void(0);")
+                                                                i.icon-heart(data-toggle="modal",data-target="#myModal")
+                                                            a.m-r-sm(href="download/#{song.songId}")
+                                                                i.icon-cloud-download
+                                                        a(href="javascript:void(0);",class="jp-play-me m-r-sm pull-left")
+                                                            i.icon-control-play.text.addMusicToListAndPlay(id="#{song.songId}")
+                                                            i.icon-control-pause.text-active
+                                                        div.clear.text-ellipsis
+                                                            span.text-muted(style="margin:0 27px",title="歌名")=song.songName
+                                                            span.text-muted(style="margin:0 27px",title="专辑")=song.albumName
+                                                            span.text-muted=song.songTime
+                                    div.col-sm-4
+                                        div.panel.panel-default
+                                            div.panel-heading 专辑
+                                            div#mAlbum.panel-body
+                                                ul.pagination.pagination
+                        a(href="javascript:void(0);",class="hide nav-off-screen-block",data-toggle="class:nav-off-screen,open",data-target="#nav,html")
+        script(src="/js/jquery.min.js")
+        <!-- Bootstrap -->
+        script(src="/js/bootstrap.js")
+        <!-- App -->
+        script(src="/js/app.js")
+        script(src="/js/slimscroll/jquery.slimscroll.min.js")
+        script(src="/js/app.plugin.js")
+        script(type="text/javascript",src="/js/jPlayer/jquery.jplayer.min.js")
+        script(type="text/javascript",src="/js/jPlayer/add-on/jplayer.playlist.min.js")
+        script(type="text/javascript",src="/js/jPlayer/demo.js")
+        script.
+            var present = 1;
+            var singerId = #{singer.singerId};
+            var totalPage = 1;
+            var addEvents = function (total) {
+                $('#mAlbum li').click(
+                    function () {
+                        var text = $(this).children().html();
+                        if (isNaN(text)) { //不是数字
+                            if ($(this).index() == 0 && present != 1) {
+                                getAlbumsOfSinger(present - 1);
+                            } else if ($(this).index() == total - 1
+                                && present != totalPage) {
+                                getAlbumsOfSinger(present + 1);
+                            }
+                        } else {//数字
+                            getAlbumsOfSinger(parseInt(text));
+                        }
+                    });
+            }
+
+            var getAlbumsOfSinger = function (page) {
+                $
+                    .ajax({
+                        url: "getAlbumsOfSinger",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            "singerId": singerId,
+                            "page": page
+                        },
+                        success: function (ret) {
+                            var albums = ret.albums;
+                            $('#mAlbum').children('article').remove();
+                            for (var i = 0; i < albums.length; i++) {
+                                $('#mAlbum ul')
+                                    .before(
+                                        '<article class="media">'
+                                        + '<a href="album?albumId=' + albums[i].albumId + '" class="pull-left thumb-md m-t-xs"> <img ' +
+                                        'src="' + albums[i].img + '"></a>'
+                                        + '<div class="media-body">'
+                                        + '<a href="album?albumId=' + albums[i].albumId + '" class="font-semibold">'
+                                        + albums[i].albumName
+                                        + '</a>'
+                                        + '<div class="text-xs block m-t-xs">'
+                                        + albums[i].issueTime
+                                        + '</div>' + '</div>'
+                                        + '</article>');
+                            }
+                            var bp = ret.bp;
+                            var ep = ret.ep;
+                            $('#mAlbum ul').html('');
+                            if (ep > bp) {
+                                $('#mAlbum ul')
+                                    .html(
+                                        '<li><a href="javascript:;"><i ' +
+                                        'class="fa fa-chevron-left"></i></a></li>'
+                                        + '<li><a href="javascript:;"><i ' +
+                                        'class="fa fa-chevron-right"></i></a></li>');
+                                for (var i = bp; i < ep + 1; i++) {
+                                    $('#mAlbum ul li:last').before(
+                                        '<li><a href="javascript:;">' + i
+                                        + '</a></li>');
+                                }
+                            }
+
+                            present = ret.present;
+                            totalPage = ret.totalPage;
+                            addEvents(ep - bp + 3);
+                        }
+                    });
+            }
+            $(function () {
+                getAlbumsOfSinger(1);
+            });
+        script(src="/js/musicPlay.js")
+        script.
+            addPlayEvents();

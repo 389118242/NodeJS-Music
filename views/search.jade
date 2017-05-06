@@ -1,0 +1,306 @@
+//
+   Created by Win on 2017/3/10.
+extends layout
+block otherHead
+    link(rel="stylesheet",href="/css/pop.css",type="text/css")
+    link(rel="stylesheet",href="/css/bulidpop.css",type="text/css")
+    link(rel="stylesheet",href="/js/nestable/nestable.css",type="text/css")
+    link(rel="stylesheet",href="/css/search.css",type="text/css")
+block body
+    body
+        section#content(style="height:100%")
+            section.vbox
+                header.header.bg-light.b-b
+                    div.pgsrch(style="background: url('/images/search.png') no-repeat")
+                        form(action="search")
+                            input(type="text",class="srch j-flag",value="#{key }",name="key",style="outline: none")
+                            span.j-flag(style="display: none;",id="auto-id-oXk5N1pSNtSmHFXl")
+                        a(hidefocus="true",href="javascript:void(0)",class="btn j-flag",title="搜索",id="auto-id-UZor2emnhQKPEkAe") 搜索
+                include modal/addToSongList
+                section.scrollable.wrapper(style="position:relative")
+                    div
+                        header.header.bg-info.lt
+                            ul(class="nav nav-tabs nav-white")
+                                li.active.media-xs
+                                    a(href="#singlesong",data-toggle="tab") 单曲
+                                li.media-xs
+                                    a(href="#songer",data-toggle="tab") 歌手
+                                li.media-xs
+                                    a(href="#zhuanji",data-toggle="tab") 专辑
+                                li.media-xs
+                                    a(href="#List",data-toggle="tab") 歌单
+                        div.tab-content(style="height: 100%")
+                            div#singlesong.tab-pane.fade.in.active
+                                ul(class="list-group gutter list-group-lg list-group-sp sortable text-ellipsis text-xs ")
+                            div#songer.tab-pane.fade
+                                div(class=" ztag text-ellipsis text-xs text-muted")
+                                    div.m-sgerlist.m-sgerlist-1
+                                        ul(class="m-cvrlst m-cvrlst-5 f-cb")
+                            div#zhuanji.tab-pane.fade
+                                div(class="n-srchrst ztag text-ellipsis text-xs text-muted")
+                                    ul(class="m-cvrlst m-cvrlst-alb3 f-cb widthh ")
+                            div#List.tab-pane.fade
+                                ul(class="list-group gutter list-group-lg list-group-sp sortable text-ellipsis text-xs ")
+                        div.text-center
+                            ul.pagination.pagination-sm
+            a(href="javascript:void(0);",class="hide nav-off-screen-block",data-toggle="class:nav-off-screen,open",data-target="#nav,html")
+        include modal/newSongList
+        script(src="/js/jquery.min.js")
+        <!-- Bootstrap -->
+        script(src="/js/bootstrap.js")
+        <!-- App -->
+        script(src="/js/app.js")
+        script(src="/js/slimscroll/jquery.slimscroll.min.js")
+        script(src="/js/sortable/jquery.sortable.js")
+        script(src="/js/nestable/jquery.nestable.js")
+        script(src="/js/nestable/demo.js")
+        script(src="/js/app.plugin.js")
+        script(type="text/javascript",src="/js/jPlayer/jquery.jplayer.min.js")
+        script(type="text/javascript",src="/js/jPlayer/add-on/jplayer.playlist.min.js")
+        script(type="text/javascript",src="/js/jPlayer/demo.js")
+        script.
+            var key = "#{key}";
+            var type = ["song", "singer", "album", "songList"];
+            var presentPage = 1;
+            var clickIndex = 0;
+            var totalPage = 1;
+            var addEvents = function (total) {
+                $('ul.pagination.pagination-sm li').click(
+                    function () {
+                        var text = $(this).children().html();
+                        var index = $('ul.nav.nav-tabs.nav-white').find(
+                            'li.active').index();
+                        if (isNaN(text)) { //不是数字
+                            if ($(this).index() == 0 && presentPage != 1) {
+                                getSeachResult(presentPage - 1, index);
+                            } else if ($(this).index() == total - 1
+                                && presentPage != totalPage) {
+                                getSeachResult(presentPage + 1, index);
+                            }
+                        } else {//数字
+                            getSeachResult(parseInt(text), index);
+                        }
+                    });
+            }
+            var getSeachResult = function (page, index) {
+                clickIndex = index;
+                key = $('input[type=text]').val();
+                if (key.trim() != '')
+                    $
+                        .ajax({
+                            url: "search",
+                            type: "POST",
+                            data: {
+                                "type": type[index],
+                                "key": key,
+                                "page": page
+                            },
+                            success: function (ret) {
+                                var resultList = ret.resultList;
+                                var $parent = $('.tab-content ul').eq(
+                                    clickIndex);
+                                $parent.children().remove();
+                                for (var i = 0; i < resultList.length; i++) {
+                                    if (clickIndex == 0) {
+                                        $parent
+                                            .append('<li class="list-group-item" value="' + resultList[i].songId + '"><span class="pull-right">'
+                                                + '<a class="m-r-xs" href="#"><i class="icon-plus m-r-xs addMusicToList" id="' + resultList[i].songId + '" title="播放"></i></a>'
+                                                + '<a href="javascript:;" name="collect"><i class="icon-heart m-r-xxs" ' +
+                                                'data-toggle="modal" data-target="#myModal"></i></a> <a href="download?songId='
+                                                + resultList[i].songId
+                                                + '"><i ' +
+                                                'class="icon-cloud-download "></i></a>'
+                                                + '</span> <span class="pull-left media-xs"> <i ' +
+                                                'class="icon-social-youtube m-r-xs addMusicToListAndPlay" id="' + resultList[i].songId + '" title="播放"></i>'
+                                                + (i + 1)
+                                                + '</span>'
+                                                + '<div class="clear "><a href="song?songId='
+                                                + resultList[i].songId
+                                                + '">'
+                                                + resultList[i].songName
+                                                + '</a> -- <a href="singer?singerId='
+                                                + resultList[i].singerId
+                                                + '">'
+                                                + resultList[i].singerName
+                                                + '</a> -- '
+                                                + resultList[i].songTime
+                                                + '</div></li>');
+                                    } else if (clickIndex == 1) {
+                                        $parent
+                                            .append('<li><div class="u-cover u-cover-5">'
+                                                + '<a href="singer?singerId='
+                                                + resultList[i].singerId
+                                                + '"><img ' +
+                                                'src="' + resultList[i].img + '"><span ' +
+                                                'title="' + resultList[i].singerName + '" class="msk"></span></a>'
+                                                + '</div>'
+                                                + '<p>'
+                                                + '<a class="nm f-thide s-fc0" href="singer?singerId='
+                                                + resultList[i].singerId
+                                                + '" '
+                                                + 'title="'
+                                                + resultList[i].singerName
+                                                + '">'
+                                                + resultList[i].singerName
+                                                + '</a>' + '</p></li>');
+                                    } else if (clickIndex == 2) {
+                                        $parent
+                                            .append('<li><div class="u-cover u-cover-alb2">'
+                                                + '<a href="album?albumId='
+                                                + resultList[i].albumId
+                                                + '"><img ' +
+                                                'src="' + resultList[i].img + '"><span' +
+                                                'title="' + resultList[i].albumName + '" class="msk"></span></a></div>'
+                                                + '<p class="dec">'
+                                                + '<a href="album?albumId='
+                                                + resultList[i].albumId
+                                                + '" class="tit f-thide s-fc0" title="'
+                                                + resultList[i].albumName
+                                                + '"><span' +
+                                                ' class="s-fc7">'
+                                                + resultList[i].albumName
+                                                + '</span></a>'
+                                                + '</p><p><span class="nm f-thide" title="' + resultList[i].singerName + '"><a '
+                                                + 'href="singer?singerId='
+                                                + resultList[i].singerId
+                                                + '" class="s-fc3">'
+                                                + resultList[i].singerName
+                                                + '</a></span></p>');
+                                    } else if (clickIndex == 3) {
+                                        $parent
+                                            .append('<li class="list-group-item "' +
+                                                'style="padding: 1px; line-height: 50px"><span ' +
+                                                'class="pull-right"> <a class=" media-xs m-r-xxxs">'
+                                                + resultList[i].num
+                                                + '首 '
+                                                + '</a> <a class="m-r-xxxs media-xs" href="#">by '
+                                                + resultList[i].userName
+                                                + ' </a> <a ' +
+                                                'class="m-r-xxxxs media-xs" href="#">收藏：'
+                                                + resultList[i].collectionNum
+                                                + '</a> <a ' +
+                                                'class="m-r-xs" href="#"><i id="' + resultList[i].listId + '" class="icon-plus m-r-xs addMusicListToList"></i></a>'
+                                                + '</span> <span class="pull-left media-xs"> <i id="' + resultList[i].listId + '" ' +
+                                                'class="icon-social-youtube m-l-xxxs m-r-xxxss addMusicListToListAndPlay"></i> <a ' +
+                                                'class="u-cover u-cover-3" href="#"><img '
+                                                + 'src="/' + resultList[i].listImg + '">' //修改过
+                                                + '</a>'
+                                                + '</span>'
+                                                + '<div class="clear m-l-xxxxs">'
+                                                + resultList[i].listName
+                                                + '</div>'
+                                                + '<div style="clear: both;"></div></li>');
+                                    }
+                                }
+                                addPlayEvents();
+                                var bp = ret.bp;
+                                var ep = ret.ep;
+                                presentPage = ret.page
+                                totalPage = ret.totalPage;
+                                $('ul.pagination.pagination-sm').html('');
+                                if (ep > bp) {
+                                    $('ul.pagination.pagination-sm')
+                                        .html(
+                                            '<li><a href="javascript:;"><i ' +
+                                            'class="fa fa-chevron-left"></i></a></li>'
+                                            + '<li><a href="javascript:;"><i ' +
+                                            'class="fa fa-chevron-right"></i></a></li>');
+                                    for (var i = bp; i < ep + 1; i++) {
+                                        $('ul.pagination.pagination-sm li:last')
+                                            .before(
+                                                '<li><a href="javascript:;">'
+                                                + i
+                                                + '</a></li>');
+                                    }
+                                    addEvents(ep - bp + 3);
+                                }
+
+                                //点击收藏歌曲把歌曲id存入我的歌单弹框内
+                                $('a[name=collect]').click(function () {
+                                    $('#songList').val('');
+                                    var songid;
+                                    songid = $(this).parent().parent().val();
+                                    $('#songList').val(songid);
+                                });
+
+                                //点击收藏，歌单弹框内容用ajax获取
+                                $('a[name=collect]').click(
+                                    function () {
+                                        $('li[name=listId]').remove();
+                                        $('#mylike').hide();
+                                        $.post("getSongList", {}, function (data, textStatus) {
+                                            var songListList = data;
+                                            if (songListList.length == 0) {
+                                                alert("抱歉，您未登录！");
+                                                return;
+                                            }
+                                            $.each(songListList, function (i, list) {
+                                                var $li = $('#mylike').clone();
+                                                $li.show();
+                                                $li.appendTo($('#listpop'));
+                                                $li.attr("id", list.listId);
+                                                $li.attr("name", "listId");
+                                                $li.find("img").attr("src", "/" + list.listImg);
+                                                $li.children().children('p').children().text(list.listName);
+                                                $li.children().children('p').eq(1).text(list.num + "首");
+                                            });
+                                            //点击歌单用ajax传送
+                                            $('li[name=listId]').click(function () {
+                                                $.post("collectSong", {
+                                                    //歌曲要收藏到的歌单
+                                                    collectListId: $(this).attr('id'),
+                                                    songId: $('#songList').val()
+                                                }, function (data) {
+                                                    if (data === '0')
+                                                        alert("请重新登录");
+                                                    else if (data === "-1")
+                                                        alert("歌单中不可重复收藏");
+                                                    $("#myModal").modal('hide');
+                                                });
+                                            })
+                                        });
+
+                                    });
+                            }
+                        });
+            }
+            $(function () {
+                //新建歌单 采用ajax
+                $('#new').click(function () {
+                    var listName = $('input[name=listName]').val();
+                    if (listName.trim() === '') {
+                        $("#newbulid").find(".err-mess").text("歌单名不能为空！").removeClass("f-vhide");
+                        return;
+                    }
+                    $.post("addSongTosongList", {
+                        listName: listName,
+                        songId: $('#songList').val()
+                    }, function (data) {
+                        if (data === '1')
+                            alert("创建并收藏成功");
+                        else if (data === '0')
+                            alert("请重新登录");
+                        else if (data === "-1")
+                            alert("创建歌单失败");
+                        else if (data === "-2")
+                            alert("收藏歌曲失败");
+                        $("#newbulid").modal('hide');
+
+                    });
+                });
+
+                $("#newbulid").on("hidden.bs.modal", function () {
+                    $('input[name=listName]').val("");
+                    $("#newbulid").find(".err-mess").addClass("f-vhide");
+                });
+                $('.nav.nav-tabs li').click(function () {
+                    var tag = $(this).index();
+                    getSeachResult(1, tag);
+                });
+                $('#auto-id-UZor2emnhQKPEkAe').click(function () {
+                    //var index = $('.nav.nav-tabs li.active').index();
+                    getSeachResult(1, clickIndex);
+                });
+                getSeachResult(1, 0);
+            })
+        script(type="text/javascript",src="/js/musicPlay.js")

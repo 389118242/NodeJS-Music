@@ -1,0 +1,181 @@
+/*新建歌单弹框的css*/
+.auto-1473594539484 {
+    font-size: 12px;
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    z-index: 1000;
+    border: 1px solid #aaa;
+    background: #fff;
+}
+/*div.m-layer .zbar, div.m-layer .zcls {
+    background: url(../images/layer.png) no-repeat 0 9999px;
+    !*_background-image: url(../../../style/web2/img/layer/layer_8.png?8341dd91ee7c6e9724f61788e218255d);*!
+}*/
+div.m-layer .zbar {
+    position: relative;
+    z-index: 10;
+    border-radius: 4px 4px 0 0;
+    background: #4cb6cb;
+}
+div.m-layer {
+    position: absolute;
+    z-index: 9998;
+    width: 530px;
+    border-radius: 4px;
+    box-shadow: 0 5px 16px rgba(0,0,0,0.8);
+    border: none;
+}
+div.m-layer-w2 {
+    width: 480px;
+}
+.auto-1473594539484 .zbar {
+    line-height: 30px;
+    background: #8098E7;
+    border-bottom: 1px solid #aaa;
+}
+div.m-layer .zbar, div.m-layer .zttl {
+    cursor: move;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.auto-1473594539484 .zttl {
+    margin-right: 20px;
+    text-align: left;
+}
+div.m-layer .zbar, div.m-layer .zttl {
+    cursor: move;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+div.m-layer .zttl {
+    margin: 0;
+    height: 38px;
+    line-height: 38px;
+    padding-left: 18px;
+    border-radius: 3px 3px 0 0;
+    font-weight: bold;
+    font-size: 14px;
+    color: #fff;
+    background-position: 50% 0;
+    _background-image: none;
+}
+.auto-1473594539484 .zcnt {
+    padding: 10px 5px;
+}
+div.m-layer div.zcnt {
+    padding: 0;
+    border: 1px solid #878787;
+    border-width: 0 1px 1px;
+    border-radius: 0 0 4px 4px;
+    background: #fff;
+}
+.m-crgd {
+    margin-left: 30px;
+    text-align: left;
+}
+div.m-layer .lyct {
+    padding: 40px 0;
+}
+.auto-1473594539484 .zcls {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    cursor: pointer;
+}
+
+
+div.m-layer .zcls {
+    position: absolute;
+    z-index: 20;
+    top: 10px;
+    right: 20px;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    text-indent:0px;
+    cursor: pointer;
+    background-position: 0 -95px;
+}
+.m-crgd .u-txt {
+    vertical-align: middle;
+    width: 330px;
+}
+.u-txt {
+    height: 19px;
+    margin: 0;
+    padding: 5px 6px 6px;
+    border: 1px solid #cdcdcd;
+    border-radius: 2px;
+    line-height: 19px;
+}
+body, textarea, select, input, button {
+    font-size: 12px;
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-text-size-adjust: none;
+}
+.m-crgd .btn, .m-crgd .u-err {
+    margin-left: 78px;
+}
+.u-err {
+    height: 17px;
+    margin-top: 5px;
+    line-height: 17px;
+    color: #e33232;
+}
+.f-vhide, .js-vhide {
+    visibility: hidden;
+}
+.m-crgd .tip {
+    margin: 8px 0 20px 78px;
+}
+.s-fc4, a.s-fc4:hover {
+    color: #999;
+}
+
+.u-btn2, .u-btn2 i {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    height: 31px;
+    line-height: 31px;
+    overflow: hidden;
+    *line-height: 32px;
+    vertical-align: top;
+    text-align: center;
+    cursor: pointer;
+}
+
+.u-btn2, .u-btn2:hover {
+    text-decoration: none;
+}
+
+.u-btn2-1 {
+    color: black;
+    background-color: gainsboro;
+    font-family: Arial;
+    width: 60px;
+    padding: 0 5px 0 0;
+    white-space: nowrap;
+    margin-right: 70px;
+}
+a{
+    font-family: Arial;
+}
+.u-btn2-2 {
+    color: #fff;
+    background-color: #4cb6cb !important;
+    width: 60px;
+    padding: 0 5px 0 0;
+    white-space: nowrap;
+    margin-right: 70px;
+}

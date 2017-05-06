@@ -1,0 +1,264 @@
+.vbox {
+    display: table;
+    border-spacing: 0;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid #d3d3d3;
+    border-width: 0 1px;
+    padding: 40px;
+}
+
+.pgsrch {
+    width: 420px;
+    height: 40px;
+    margin: 0 auto;
+    background-position: 0 0;
+    z-index: 10;
+}
+
+.srch .j-flag {
+    font-size: 12px;
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.b-b {
+    border-bottom: 0px;
+}
+
+.bg-light {
+    background-color: #f2f4f8;
+    color: #788188;
+}
+
+.f-pr {
+    position: relative;
+    zoom: 1;
+}
+
+.pgsrch .srch {
+    float: left;
+    width: 320px;
+    height: 17px;
+    margin: 12px 0 0 20px;
+    padding: 0;
+    background: #fff;
+    border: none;
+}
+
+.pgsrch .btn {
+    float: right;
+    width: 50px;
+    height: 40px;
+    text-indent: -9999px;
+}
+
+.bg-info .nav > li > a {
+    color: #ffffff;
+}
+
+.bg-info .nav > li.active > a {
+    color: #788188;
+}
+
+.nav-tabs > li {
+    float: left;
+    margin-bottom: -1px;
+    width: 25%;
+    text-align: center;
+}
+
+.nav-tabs > li > a {
+    margin-right: 0px;
+}
+
+.list-group {
+    border-radius: 2px;
+    margin-top: 20px;
+}
+
+/*=====================================songer====================================*/
+.n-srchrst {
+    margin-top: 20px;
+}
+
+.m-sgerlist-1 .m-cvrlst {
+    margin: 0 0 0 -24px;
+}
+
+.m-sgerlist .m-cvrlst {
+    margin: 20px 0 0 -17px;
+    padding-left: 0px;
+}
+
+.u-cover-5 {
+    width: 130px;
+    height: 130px;
+}
+
+.u-cover {
+    position: relative;
+    display: block;
+}
+
+.m-sgerlist-1 .m-cvrlst li {
+    padding-left: 24px;
+}
+
+.m-sgerlist .m-cvrlst li {
+    padding-left: 17px;
+}
+
+.m-cvrlst-5 li {
+    width: 130px;
+    height: 154px;
+}
+
+.m-cvrlst li {
+    float: left;
+    display: inline-block;
+    width: 140px;
+    height: 188px;
+    overflow: hidden;
+    padding: 0 0 30px 50px;
+    line-height: 1.4;
+}
+
+.u-cover img {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.u-cover-3 {
+    width: 50px;
+    height: 50px;
+    float: right;
+}
+
+.u-cover .msk {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.m-sgerlist .m-cvrlst li p {
+    margin-top: 8px;
+}
+
+.m-cvrlst li p {
+    width: 100%;
+}
+
+/*=============================zhuanji========================*/
+.m-cvrlst-alb3 {
+    margin-left: -33px;
+}
+
+.f-cb {
+    padding-left: 0px;
+}
+
+.m-cvrlst-alb3 li {
+    padding-left: 33px;
+}
+
+.m-cvrlst-alb2 li, .m-cvrlst-alb3 li {
+    width: 153px;
+    height: 178px;
+}
+
+.u-cover-alb2 {
+    width: 130px;
+    height: 130px;
+}
+
+.m-cvrlst li .dec {
+    margin: 8px 0 3px;
+    font-size: 14px;
+}
+
+.m-cvrlst li .tit {
+    display: inline-block;
+    max-width: 100%;
+    _width: 100%;
+    vertical-align: middle;
+}
+
+.f-thide {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.m-cvrlst li .nm {
+    display: inline-block;
+    max-width: 85%;
+    vertical-align: middle;
+}
+
+.s-fc3, a.s-fc3:hover {
+    color: #666;
+}
+
+.widthh li {
+    width: 183px;
+    height: 208px;
+}
+
+.u-cover .msk, .n-musicsd .lst .avatar .msk {
+    background: url("../images/coverall.png") no-repeat;
+}
+
+.u-cover .msk {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.u-cover-alb2 .msk {
+    width: 153px;
+    height: 130px;
+    background-position: 0 -845px;
+}
+
+.m-r-xxs {
+    margin-right: 10px;
+}
+
+.m-r-xxxs {
+    margin-right: 15px;
+}
+
+.m-l-xxxs {
+    margin-left: 15px;
+}
+
+.m-r-xxxss {
+    margin-right: 20px;
+}
+
+.m-r-xxxxs {
+    margin-right: 80px;
+}
+
+.m-l-xxxxs {
+    margin-left: 117px;
+}
+
+.m-cvrlst li .dec {
+    margin: 8px 0 3px;
+    font-size: 13px;
+}
+
+.modal {
+    right: 0;
+    overflow: auto;
+    outline: 0;
+}

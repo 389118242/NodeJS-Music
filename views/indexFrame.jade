@@ -1,0 +1,198 @@
+//
+   Created by Win on 2017/2/28.
+extends layout
+block otherHead
+    link(rel="stylesheet",href="/css/pop.css",type="text/css")
+    link(rel="stylesheet",href="/css/bulidpop.css",type="text/css")
+    style.
+        .modal {
+            right: 0;
+            overflow: auto;
+            outline: 0;
+        }
+    script(src="/js/jquery.min.js")
+    script.
+        $(function () {
+            //点击收藏歌曲把歌曲id存入我的歌单弹框内
+            $('.collect').click(function () {
+                $('#songList').val('');
+                var songid;
+                songid = $(this).parents('.pos-rlt').attr('value');
+                $('#songList').val(songid);
+            });
+            //点击收藏，收藏到歌单
+            $('.collect').click(function () {
+                $('li[name=listId]').remove();
+                $('#mylike').hide();
+                $.post("getSongList", {}, function (data, textStatus) {
+                    var songListList = data;
+                    if (songListList.length == 0) {
+                        alert("抱歉，您未登录！");
+                        return;
+                    }
+                    $.each(songListList, function (i, list) {
+                        var $li = $('#mylike').clone();
+                        $li.show();
+                        $li.appendTo($('#listpop'));
+                        $li.attr("id", list.listId);
+                        $li.attr("name", "listId");
+                        $li.find("img").attr("src", "/" + list.listImg);
+                        $li.children().children('p').children().text(list.listName);
+                        $li.children().children('p').eq(1).text(list.num + "首");
+                    });
+                    //点击歌单用ajax传送
+                    $('li[name=listId]').click(function () {
+                        $.post("collectSong", {
+                            //歌曲要收藏到的歌单
+                            collectListId: $(this).attr('id'),
+                            songId: $('#songList').val()
+                        }, function (data) {
+                            if (data === '0')
+                                alert("请重新登录");
+                            else if (data === "-1")
+                                alert("歌单中不可重复收藏");
+                            $("#myModal").modal('hide');
+                        });
+                    })
+                });
+
+            });
+            //新建歌单 采用ajax
+            $('#new').click(function () {
+                var listName = $('input[name=listName]').val();
+                if (listName.trim() === '') {
+                    $("#newbulid").find(".err-mess").text("歌单名不能为空！").removeClass("f-vhide");
+                    return;
+                }
+                $.post("addSongTosongList", {
+                    listName: listName,
+                    songId: $('#songList').val()
+                }, function (data) {
+                    if (data === '1')
+                        alert("创建并收藏成功");
+                    else if (data === '0')
+                        alert("请重新登录");
+                    else if (data === "-1")
+                        alert("创建歌单失败");
+                    else if (data === "-2")
+                        alert("收藏歌曲失败");
+                    $("#newbulid").modal('hide');
+
+                });
+            });
+
+            $("#newbulid").on("hidden.bs.modal", function () {
+                $('input[name=listName]').val("");
+                $("#newbulid").find(".err-mess").addClass("f-vhide");
+            });
+        });
+block body
+    body
+        <!-- 新建歌单弹框 -->
+        div(role="dialog",tabindex="-1",aria-labelledby="myModalLabel",aria-hidden="true",id="newbulid",style="overflow-y: auto;top: 20%;bottom: 40.9%; left: 30%;",class="modal fade auto-1473594539484 m-layer z-show m-layer-w2")
+            div#auto-id-rZVKAsR9HnemIBlD.zbar
+                div.zttl 新建歌单
+            div.zcnt
+                div#auto-id-I7km2EPlFaoE7uW3(class="lyct m-crgd f-cb f-tc")
+                    p 歌单名：
+                        input(data-required="true",id="auto-id-LSZQ38VTqM5s7eWT",class="u-txt j-flag",type="text",name="listName")
+                    div.u-err.f-vhide.j-flag.err-mess
+                    p.tip.s-fc4 可通过“收藏”将音乐添加到新歌单中
+                    button#new(class="btn btn-s-md btn-info btn-rounded",style="margin-left:27px") 新建
+                    button#cancel(data-dismiss="modal",class="btn btn-s-md btn-info btn-rounded") 取消
+            button(type="button",class="close zcls",data-dismiss="modal",aria-hidden="true",id="auto-id-gZz1lykTByivR2Bd",title="关闭窗体") ×
+
+        <!-- 添加到歌单弹框 -->
+        div(id="myModal",role="dialog",tabindex="-1",aria-labelledby="myModalLabel",aria-hidden="true",class="modal fade auto-1473474137786 m-layer z-show m-layer-w2",style="top:15%; left: 30%;")
+            div#auto-id-bpDfekqTEA8M9tat.zbar
+                button(type="button",class="close",data-dismiss="modal",aria-hidden="true",style="background-color: white;color:black; width: 20px;height: 20px") &times;
+                div.zttl 添加到歌单
+            div.zcnt
+                input#listId(type="hidden")
+                div#songList(class="lyct lyct-1 m-favgd f-cb",value="")
+                    div#newList.tit.j-flag(data-dismiss="modal",data-toggle="modal",data-target="#newbulid")
+                        i.u-icn.u-icn-33
+                        ="新歌单"
+                    div#auto-id-lH2ZTJaEJry8z8NG.j-flag
+                        ul#listpop
+                            li#mylike(data-dismiss="modal",class="xtag")
+                                div.item.f-cb
+                                    div.left
+                                        a(href="javascript:void(0)",class="avatar",target="_blank")
+                                            img(alt="",src="http://p4.music.126.net/zPaZBLAigYIxYHg28VABdg==/3286440256922472.jpg?param=40y40")
+                                    p.name.f-thide
+                                        a(class="s-fc0",href="javascript:void(0)",target="_blank") 我喜欢的音乐
+                                    p.s-fc3 2首
+
+        section.hbox.stretch
+            section#content
+                section.hbox.stretch
+                    <!-- 左边推荐 -->
+                    section
+                        section.vbox
+                            section#bjax-target(class="scrollable padder-lg w-f-md")
+                                a(href="#",class="pull-right text-muted m-t-lg",data-toggle="class:fa-spin")
+                                    i#refresh.icon-refresh.i-lg.inline
+                                h2.font-thin.m-b 每日推荐
+                                    span(class="musicbar animate inline m-l-sm",style="width: 20px; height: 20px")
+                                        span(class="bar1 a1 bg-primary lter")
+                                        span(class="bar2 a2 bg-info lt")
+                                        span(class="bar3 a3 bg-success")
+                                        span(class="bar4 a4 bg-warning dk")
+                                        span(class="bar5 a5 bg-danger dker")
+                                .row.row-sm
+                                    - for(var i=0;i<songList.length;i++){
+                                    -   var list = songList[i];
+                                    div(class="col-xs-6 col-sm-4 col-md-3 col-lg-2")
+                                        div.item
+                                            div.pos-rlt(value="#{list.songId}")
+                                                div(class="item-overlay opacity r r-2x bg-black")
+                                                    div(class="text-info padder m-t-sm text-sm")
+                                                        i.fa.fa-star
+                                                        i.fa.fa-star
+                                                        i.fa.fa-star
+                                                        i.fa.fa-star-o.text-muted
+                                                        i.fa.fa-star-o.text-muted
+                                                    div.center.text-center.m-t-n
+                                                        a(href="javascript:void(0);" data-toggle="class")
+                                                            i(id="#{list.songId }",class="icon-control-play i-2x text addMusicToListAndPlay")
+                                                            i(class="icon-control-pause i-2x text-active")
+                                                    .bottom.padder.m-b-sm
+                                                        a(href="javascript:void(0);",class="collect pull-right",data-toggle="class")
+                                                            i(class="fa fa-heart-o text",data-toggle="modal",data-target="#myModal")
+                                                        a(href="#",data-toggle="class")
+                                                            i(id="#{list.songId }",class="fa fa-plus-circle text addMusicToList")
+                                                            i(class="fa fa-check-circle text-active text-info")
+                                                a(href="javascript:;")
+                                                    img(src="#{list.img}",alt="",class="r r-2x img-full")
+                                            div(id="#{list.songId}",class="padder-v")
+                                                a(href="song?songId=#{list.songId }",class="text-ellipsis")=list.songName
+                                                a(href="singer?singerId=#{list.singerId }",class="text-ellipsis text-xs text-muted")=list.singerName
+                                    - }
+                    aside#sidebar.aside-md.bg-light.dk
+                        section.vbox.animated.fadeInRight
+                            section.w-f-md.scrollable.hover
+                                h4.font-thin.m-l-md.m-t 排行榜
+                                ul(class="list-group no-bg no-borders auto m-t-n-xxs")
+                                    - for(var i = 0;i < sList.length ;i++){
+                                    -   var item = sList[i];
+                                    li.list-group-item
+                                        span(class="pull-left thumb-xs m-t-xs avatar m-l-xs m-r-sm")
+                                            img(src="#{item.img }",class="img-full")
+                                        div.clear
+                                            div
+                                                a(href="song?songId=#{item.songId }")=item.songName
+                                            a(href="singer?singerId=#{item.singerId }")
+                                                small.text-muted=item.singerName
+                                    - }
+        script(src="/js/bootstrap.js")
+        <!-- App -->
+        script(src="/js/app.js")
+        script(src="/js/slimscroll/jquery.slimscroll.min.js")
+        script(src="/js/app.plugin.js")
+        script(type="text/javascript" src="/js/jPlayer/jquery.jplayer.min.js")
+        script(type="text/javascript",src="/js/jPlayer/add-on/jplayer.playlist.min.js")
+        script(type="text/javascript",src="/js/jPlayer/demo.js")
+        script(type="text/javascript",src="/js/musicPlay.js")
+        script.
+            addPlayEvents();

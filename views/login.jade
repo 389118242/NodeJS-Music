@@ -1,0 +1,107 @@
+//
+   Created by Win on 2017/3/3.
+extends layout
+block body
+    body(class="bg-info dker",style="overflow-y:scroll")
+        section#content(class="m-t-lg wrapper-md animated fadeInUp")
+            div.container.aside-xl
+                a(class="navbar-brand block",href="/Music")
+                    span.h1.font-bold 一七
+                section.m-b-lg
+                    header.wrapper.text-center
+                        strong 进入一七，一起感受音乐的魅力
+                    form(data-validate="parsley")
+                        div.form-group
+                            input(type="text",placeholder="账号",class="form-control rounded input-lg text-center no-border",name="userAccount",data-required)
+                        div.form-group
+                            input(type="password",placeholder="密码",class="form-control rounded input-lg text-center no-border",name="userPassword",data-required)
+                        div.form-group(style="margin:0;")
+                            div(class="col-lg-offset-2 col-lg-10",style="margin-left: 0")
+                                div(class="checkbox i-checks",style="margin-top: 0")
+                                    label
+                                        input(type="checkbox",checked,name="remberPassword")
+                                        i
+                                        ='记住密码'
+                        button(type="submit",class="btn btn-lg btn-warning lt b-white b-2x btn-block btn-rounded")
+                            i(class="icon-arrow-right pull-right")
+                            span.m-r-n-lg 登录
+                        div.text-center.m-t.m-b
+                            a(href="javascript:void(0);")
+                                small 忘记密码？
+                        div.line.line-dashed
+                        p.text-muted.text-center
+                            small 没有账号？
+                        a(href="register",class="btn btn-lg btn-info btn-block rounded") 注册
+        footer#footer
+            div.text-center.padder
+                p
+                    small!='一七音乐<br/>&copy; 2017'
+
+        script(src="/js/jquery.min.js")
+        <!-- Bootstrap -->
+        script(src="/js/bootstrap.js")
+        <!-- parsley -->
+        script(src="/js/parsley/parsley.min.js")
+        <!-- App -->
+        script(src="/js/app.js")
+        script(src="/js/slimscroll/jquery.slimscroll.min.js")
+        script(src="/js/app.plugin.js")
+        script(type="text/javascript",src="/js/jPlayer/jquery.jplayer.min.js")
+        script(type="text/javascript",src="/js/jPlayer/add-on/jplayer.playlist.min.js")
+        script(type="text/javascript",src="/js/jPlayer/demo.js")
+        script.
+            $('button[type=submit]')
+                .click(
+                    function (event) {
+                        var a = $('form').parsley();
+                        var tag = true;
+                        var items = a.items;
+                        for (var i = 0; i < items.length - 1; i++) {
+                            var item = items[i];
+                            var itemTag = item.validate();
+                            if (!itemTag) {
+                                tag = itemTag;
+                                break;
+                            }
+                        }
+                        if (tag) {
+                            $
+                                .ajax({
+                                    url: "login",
+                                    type: "POST",
+                                    data: {
+                                        "userAccount": $(
+                                            'input[type=text]')
+                                            .val(),
+                                        "userPassword": $(
+                                            'input[type=password]')
+                                            .val(),
+                                        "isAutoLogin": $(
+                                            'input[type=checkbox]')
+                                            .prop('checked')
+                                    },
+                                    success: function (ret) {
+                                        if (ret === "SUCCESS") {
+                                            location.href = "index";
+                                        } else if (ret === "ENABLE") {
+                                            if ($('#errorMMM').length == 0)
+                                                $('input[type=password]').after(
+                                                    '<div class="form-group" id="errorMMM" style="text-align:center;margin-top: 15px;font-size=18px;color:red"">'
+                                                    + '账号被冻结'
+                                                    + '</div>');
+                                            else
+                                                $('#errorMMM').html("账号被冻结");
+                                        } else {
+                                            if ($('#errorMMM').length == 0)
+                                                $('input[type=password]').after(
+                                                    '<div class="form-group" id="errorMMM" style="text-align:center;margin-top: 15px;font-size=18px;color:red"">'
+                                                    + '账号或密码错误'
+                                                    + '</div>');
+                                            else
+                                                $('#errorMMM').html("账号或密码错误");
+                                        }
+                                    }
+                                });
+                        }
+                        event.preventDefault();
+                    });

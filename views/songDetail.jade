@@ -1,0 +1,308 @@
+//
+   Created by Win on 2017/3/11.
+extends layout
+block otherHead
+    link(rel="stylesheet",href="/css/pop.css",type="text/css")
+    link(rel="stylesheet",href="/css/bulidpop.css",type="text/css")
+    link(rel="stylesheet",href="/css/jquery.sinaEmotion.css",type="text/css")
+    style.
+        .f-hide, .js-hide {
+            display: none !important;
+        }
+
+        #lyric-content {
+            line-height: 23px;
+            text-align: center
+        }
+
+        .song {
+            height: 100%;
+            width: 100%;
+        }
+
+        .song_left {
+            height: 100%;
+            width: 40%;
+            padding: 0px 40px;
+            display: inline-block;
+        }
+
+        .song_right {
+            height: 200px;
+            width: 60%;
+            float: right;
+        }
+
+        .doc-buttons {
+            margin-top: 20px;
+        }
+
+        .mod_btn_green__icon_down {
+            width: 16px;
+            height: 16px;
+            background-position: -40px -220px;
+            display: inline-block;
+            margin-right: 6px;
+            background-image: url(images/icon.png);
+            background-repeat: no-repeat;
+            vertical-align: -3px;
+        }
+
+        .mod_btn_green__icon_like {
+            width: 16px;
+            height: 16px;
+            background-position: -40px -220px;
+            display: inline-block;
+            margin-right: 6px;
+            background-image: url(images/icon.png);
+            background-repeat: no-repeat;
+            vertical-align: -3px;
+            background-position: -60px 0px;
+        }
+
+        .mod_btn_green__icon_play {
+            width: 16px;
+            height: 16px;
+            background-position: -40px -220px;
+            display: inline-block;
+            margin-right: 6px;
+            background-image: url(images/icon.png);
+            background-repeat: no-repeat;
+            vertical-align: -3px;
+            background-position: -60px -220px;
+        }
+
+        .mod_btn_green__icon_common {
+            width: 16px;
+            height: 16px;
+            background-position: -40px -220px;
+            display: inline-block;
+            margin-right: 6px;
+            background-image: url(images/icon.png);
+            background-repeat: no-repeat;
+            vertical-align: -3px;
+            background-position: -100px -40px;
+        }
+
+        .abtn {
+            font-weight: 500;
+            border-radius: 2px;
+            float: right;
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            -webkit-user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            padding-top: 3px;
+            padding-bottom: 3px;
+        }
+
+        .m-t-none {
+            margin-top: 0;
+            font-size: 23px;
+        }
+
+        .m-b-lg {
+            margin-bottom: 15px;
+        }
+
+        .modal {
+            right: 0;
+            overflow: auto;
+            outline: 0;
+        }
+    script(src="/js/jquery.min.js")
+    script(src="/js/ie/html5shiv.js")
+    script(src="/js/ie/respond.min.js")
+    script(src="/js/ie/excanvas.js")
+block body
+    body
+        include modal/newSongList
+        include modal/addToSongList
+        section.vbox
+            section
+                section.hbox.stretch
+                    section#content(class="#{song.songId}")
+                        section.vbox
+                            section.scrollable.wrapper-lg
+                                div.row
+                                    div.col-sm-8
+                                        div.panel
+                                            div.row
+                                                div.col-sm-5.wrapper-lg
+                                                    img.img-full.m-b(src="#{song.img }")
+                                                div.col-sm-7.wrapper-lg
+                                                    h4.text-black=song.songName
+                                                    div.clearfix.m-b-lg
+                                                        div.clear
+                                                            a(href="singer?singerId=#{song.singerId }")
+                                                                small.text-muted=song.singerName
+                                                    div.m-b-lg
+                                                        a(id="#{song.songId }",href="javascript:void(0);",class="btn btn-sm btn-icon btn-info addMusicToListAndPlay")
+                                                            i(class="icon-control-play")
+                                                        a(id="#{song.songId }",href="javascript:void(0);",class="btn btn-rounded btn-sm btn-icon btn-default addMusicToList")
+                                                            i(class="icon-plus")
+                                                        a#collect(href="javascript:void(0);",class="btn btn-rounded btn-sm btn-icon btn-default",data-toggle="modal",data-target="#myModal")
+                                                            i.icon-heart
+                                                        a(href="download/#{song.songId }",class="btn btn-rounded btn-sm btn-icon btn-default")
+                                                            i.icon-cloud-download
+                                                        a(href="#comment",class="btn btn-rounded btn-sm btn-icon btn-default")
+                                                            i.icon-note
+                                                    div(style="line-height:27px") 专辑：
+                                                        a(href="album?albumId=#{song.albumId}",class="badge bg-light")=song.albumName
+                                                        br
+                                                        | 歌曲时长：
+                                                        a(href="javascript:void(0);",class="badge bg-light")=song.songTime
+                                                        br
+                                                        | 播放次数：
+                                                        a(href="javascript:void(0);",class="badge bg-light")=song.playNum
+
+                                            div.wrapper
+                                                div.post-sum
+                                                    if lyrs.length > 1
+                                                        - var tag = parseInt(lyrs.length/3) + 1;
+                                                        div#lyric-content
+                                                            - for(var i = 0;i < tag;i++){
+                                                            - var lyr = lyrs[i];
+                                                            - var index = lyr.indexOf("\\n");
+                                                            - if(index !== -1){
+                                                            -   lyr = lyr.substring(0,index);
+                                                            - }
+                                                            | #{lyr}
+                                                            br
+                                                            - }
+                                                            div#flag_more.f-hide
+                                                                - for(var i = tag;i < lyrs.length;i++){
+                                                                - var lyr = lyrs[i];
+                                                                - var index = lyr.indexOf("\\n");
+                                                                - if(index !== -1){
+                                                                -    lyr = lyr.substring(0,index);
+                                                                - }
+                                                                | #{lyr}
+                                                                br
+                                                                - }
+                                                            div.crl(style="font-size: 18px;font-weight: bold;")
+                                                                a#flag_ctrl.s-fc7(href="javascript:void(0)") << 展开 >>
+                                                                    i.u-icn.u-icn-69
+                                                div.line.b-b
+                                                div.text-muted
+                                        include modal/comment
+                                    include modal/pageRight
+                        a(href="javascript:void(0);",class="hide nav-off-screen-block",data-toggle="class:nav-off-screen,open",data-target="#nav,html")
+        script.
+            var loginUserId = "#{userId}";
+            var comType = "song";
+            var replyId = "";
+            var replyName = "";
+
+            var mid = #{song.songId};
+        script(src="/js/jquery.sinaEmotion.js")
+        script(src="/js/show-tran-emo.js")
+        <!-- Bootstrap -->
+        script(src="/js/bootstrap.js")
+        <!-- App -->
+        script(src="/js/app.js")
+        script(src="/js/slimscroll/jquery.slimscroll.min.js")
+        script(src="/js/app.plugin.js")
+        script(type="text/javascript",src="/js/jPlayer/jquery.jplayer.min.js")
+        script(type="text/javascript",src="/js/jPlayer/add-on/jplayer.playlist.min.js")
+        script(type="text/javascript",src="/js/jPlayer/demo.js")
+        script.
+            $(function () {
+                var count = 0;
+                //展开
+                $('#flag_ctrl').click(function () {
+                    //展开
+                    if ($(this).is(":contains('<< 展开 >>')")) {
+                        //展开隐藏内容
+                        $('#flag_more').removeClass('f-hide');
+                        //更改为收起
+                        $(this).text(">> 收起 <<");
+                    } else {
+                        //收起
+                        if ($(this).is(":contains('>> 收起 <<')")) {
+                            //展开隐藏内容
+                            $('#flag_more').addClass('f-hide');
+                            //更改为收起
+                            $(this).text("<< 展开 >>");
+                        }
+                    }
+                });
+
+                //点击收藏，收藏到歌单
+                $('#collect').click(
+                    function () {
+                        $('li[name=listId]').remove();
+                        $('#mylike').hide();
+                        $.post("getSongList", {}, function (data, textStatus) {
+                            var songListList = data;
+                            $.each(songListList, function (i, list) {
+                                var $li = $('#mylike').clone();
+                                $li.show();
+                                $li.appendTo($('#listpop'));
+                                $li.attr("id", list.listId);
+                                $li.attr("name", "listId");
+                                $li.find("img").attr("src", "/" + list.listImg);
+                                $li.children().children('p').children().text(
+                                    list.listName);
+                                $li.children().children('p').eq(1).text(
+                                    list.num + "首");
+                                //点击歌单用ajax传送
+                                $('li[name=listId]').click(function () {
+                                    $.post("collectSong", {
+                                        //歌曲要收藏到的歌单
+                                        collectListId: $(this).attr('id'),
+                                        songId: $('#content').attr('class')
+                                    }, function (data) {
+                                        if (data === '0')
+                                            alert("请重新登录");
+                                        else if (data === "-1")
+                                            alert("歌单中不可重复收藏");
+                                        $("#myModal").modal('hide');
+                                    });
+
+                                })
+                            })
+
+                        });
+
+                    });
+                //新建歌单 采用ajax
+                $('#new').click(function () {
+                    var listName = $('input[name=listName]').val();
+                    if (listName.trim() === '') {
+                        $("#newbulid").find(".err-mess").text("歌单名不能为空！").removeClass("f-vhide");
+                        return;
+                    }
+                    $.post("addSongTosongList", {
+                        listName: listName,
+                        songId: $('#content').attr('class')
+                    }, function (data) {
+                        if (data === '1')
+                            alert("创建并收藏成功");
+                        else if (data === '0')
+                            alert("请重新登录");
+                        else if (data === "-1")
+                            alert("创建歌单失败");
+                        else if (data === "-2")
+                            alert("收藏歌曲失败");
+                        $("#newbulid").modal('hide');
+
+                    });
+                });
+
+                $("#newbulid").on("hidden.bs.modal", function () {
+                    $('input[name=listName]').val("");
+                    $("#newbulid").find(".err-mess").addClass("f-vhide");
+                });
+            })
+        script(src="/js/musicPlay.js")
+        script.
+            addPlayEvents();

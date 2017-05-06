@@ -1,0 +1,313 @@
+//
+   Created by Win on 2017/3/6.
+extends layout
+block otherHead
+    style.
+        #myMusicPlay {
+            position: absolute;
+            bottom: 0;
+        }
+
+        .tabs-left > ul.nav-tabs {
+            float: left;
+        }
+
+        .tabs-left > .nav-tabs > li {
+            float: none;
+            background-color: #edf2f3;
+        }
+
+        .tabs-left > .nav-tabs > li > a {
+            border: 0;
+            margin: 0;
+        }
+
+        .tabs-left > .nav-tabs {
+            border: 0;
+            /*position: relative;*/
+            /*top: 27px;*/
+            /*left:13px;*/
+            text-align: center;
+            width: 147px;
+        }
+
+        .tabs-left > .nav-tabs > li > a:hover {
+            border: 0;
+            background-color: #fff;
+        }
+
+        .tabs-left > .nav-tabs > li.active > a {
+            border: 0;
+            background-color: #fff;
+        }
+
+        .tab-content {
+            overflow: auto;
+            background-color: white;
+        }
+
+        .tabs-left {
+            background-color: #edf2f3;
+            height: 100%;
+        }
+
+        .scrollable .tab-content {
+            height: 100%;
+        }
+
+        .tabs-left .tab-content {
+            background-color: #fff;
+        }
+
+        #interaction {
+            height: 100%;
+        }
+
+        .tabs-left .tab-pane {
+            height: 100%;
+            padding: 13px 27px;
+        }
+
+        .message {
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .read, .read * {
+            color: #999 !important;
+        }
+
+        .no-read, .no-read * {
+            color: #3b464d !important;
+        }
+
+        .allnewcount {
+            width: 19px;
+            _width: 18px;
+            height: 19px;
+            line-height: 19px;
+            text-align: center;
+            display: inline-block;
+            padding: 0 2px;
+            background: #4cb6cb;
+            color: #fff;
+            border-radius: 13px;
+        }
+
+        .messagenew {
+            width: 19px;
+            _width: 18px;
+            height: 19px;
+            line-height: 19px;
+            text-align: center;
+            display: inline-block;
+            padding: 0 2px;
+            background: #4cb6cb;
+            color: #fff;
+            border-radius: 13px;
+        }
+
+        .likenew {
+            width: 19px;
+            _width: 18px;
+            height: 19px;
+            line-height: 19px;
+            text-align: center;
+            display: inline-block;
+            padding: 0 2px;
+            background: #4cb6cb;
+            color: #fff;
+            border-radius: 13px;
+        }
+
+        .letternew {
+            width: 19px;
+            _width: 18px;
+            height: 19px;
+            line-height: 19px;
+            text-align: center;
+            display: inline-block;
+            padding: 0 2px;
+            background: #4cb6cb;
+            color: #fff;
+            border-radius: 13px;
+        }
+block body
+    body
+        section.hbox.stretch
+            section#content
+                section.vbox
+                    section.scrollable
+                        section.hbox.stretch
+                            aside(class="aside-lg bg-light lter b-r")
+                                section.vbox
+                                    section.scrollable
+                                        div.wrapper
+                                            div.text-center.m-b.m-t
+                                                a.thumb-lg(href="javascript:void(0);")
+                                                    img.img-circle(src="#{user.userImg}")
+                                                div
+                                                    div(class="h3 m-t-xs m-b-xs")=user.userName
+                                                    if user.userAddress
+                                                        small.text-muted
+                                                            i.fa.fa-map-marker
+                                                            |    #{user.province.addressName} #{user.city.addressName} #{user.district.addressName}
+                            aside.bg-white(style="padding-right: 13px;")
+                                section.vbox
+                                    header.header.bg-light.lt
+                                        ul.nav.nav-tabs.nav-white
+                                            li.active
+                                                a(href="#activity",data-toggle="tab") 创建的歌单
+                                            li
+                                                a(href="#events",data-toggle="tab") 收藏的歌单
+                                            if isSelf
+                                                li
+                                                    a(href="#interaction",data-toggle="tab") 我的消息
+                                                        em.allnewcount 1
+                                    section.scrollable
+                                        div.tab-content
+                                            div#activity.tab-pane.active
+                                                ul(class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border")
+                                                    each item,index in songListList
+                                                        li#myLikeSong.list-group-item
+                                                            a(href="javascript:void(0);",class="thumb-sm pull-left m-r-sm",style="position: relative;")
+                                                                img(src="/#{item.listImg }",class="img-circle")
+                                                            a.clear(href="songListDetail?songListId=#{item.listId }",style="height: 37px")
+                                                                strong.block=item.listName
+                                                                small
+                                                            if isSelf && index > 0
+                                                                a(href="editSongList?songListId=#{item.listId }",class="btn btn-rounded btn-sm btn-icon btn-default",style="position: absolute; top: 13px; right: 10px")
+                                                                    i.icon-note
+                                            div#events.tab-pane
+                                                ul(class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border")
+                                                    each item in collectionList
+                                                        li#myLikeSong.list-group-item
+                                                            a(href="javascript:void(0);",class="thumb-sm pull-left m-r-sm",style="position: relative;")
+                                                                img(src="/#{item.listImg}",class="img-circle")
+                                                            a(href="songListDetail?songListId=#{item.listId }",class="clear",style="height: 37px")
+                                                                strong.block=item.listName
+                                                                small
+                                            if isSelf
+                                                div#interaction.tab-pane
+                                                    div.tabbable.tabs-left
+                                                        ul.nav.nav-tabs
+                                                            li.active
+                                                                a(href="#first",data-toggle="tab") 评论
+                                                                    if messageNew != 0
+                                                                        em.messagenew=messageNew
+                                                            li
+                                                                a(href="#second",data-toggle="tab") 回复
+                                                                    if likesNew != 0
+                                                                        em.likenew=likesNew
+                                                            li
+                                                                a(href="#third",data-toggle="tab") 私信
+                                                                    if lettersNew != 0
+                                                                        em.letternew=lettersNew
+                                                        div.tab-content
+                                                            div#first.tab-pane.fade.in.active
+                                                                each messages in messagesList
+                                                                    div.text-center.wrapper
+                                                                        div(id="#{messages.messId}",class=messages.isRead == 0 ? "no-read message" : "read message")
+                                                                            a(href="profile?userId=#{messages.userId}")=messages.userName
+                                                                            br
+                                                                            | 评论我：!{messages.messContent}
+                                                            div#second.tab-pane.fade
+                                                                each likes in likesList
+                                                                    div.text-center.wrapper
+                                                                        div(id="#{likes.messId }",class=likes.isRead == 0 ? "no-read message" : "read message")
+                                                                            a(href="profile?userId=#{likes.userId}")=likes.userName
+                                                                            br
+                                                                            | 回复我：!{likes.messContent }
+                                                            div#third.tab-pane.fade
+                                                                each letters in letterList
+                                                                    div.text-center.wrapper
+                                                                        div(id="#{letters.messId }",class=letters.isRead == 0 ? "no-read message" : "read message")
+                                                                            if letters.sendUserId == letters.receiveUserId
+                                                                                | 系统消息：!{letters.messContent}
+                                                                            else
+                                                                                a(href="javascript:void(0);")=letters.userName
+                                                                                |  私信你：!{letters.messContent}
+
+                a(href="javascript:void(0);",class="hide nav-off-screen-block",data-toggle="class:nav-off-screen,open",data-target="#nav,html")
+
+        script(src="/js/jquery.min.js")
+        <!-- Bootstrap -->
+        script(src="/js/bootstrap.js")
+        <!-- App -->
+        script(src="/js/app.js")
+        script(src="/js/slimscroll/jquery.slimscroll.min.js")
+        script(src="/js/charts/easypiechart/jquery.easy-pie-chart.js")
+        script(src="/js/app.plugin.js")
+        script(type="text/javascript",src="/js/jPlayer/jquery.jplayer.min.js")
+        script(type="text/javascript",src="/js/jPlayer/add-on/jplayer.playlist.min.js")
+        script(type="text/javascript",src="/js/jPlayer/demo.js")
+        script.
+            $(function () {
+                allcount();
+                //点击表示已读消息
+                $(".no-read")
+                    .click(
+                        function () {
+                            doAjax($(this).attr("id"));
+                            var index = $(this).parents(".tab-pane.fade").index();
+                            if (parseInt($(this).parent().parent().parent()
+                                    .prev().children().eq(index).children()
+                                    .children().text()) == 1) {
+                                $(this).parent().parent().parent().prev()
+                                    .children().eq(index).children()
+                                    .children().remove();
+                            } else {
+                                $(this)
+                                    .parent()
+                                    .parent()
+                                    .parent()
+                                    .prev()
+                                    .children()
+                                    .eq(index)
+                                    .children()
+                                    .children()
+                                    .text(
+                                        parseInt($(this).parent()
+                                            .parent().parent()
+                                            .prev().children()
+                                            .eq(index).children()
+                                            .children().text()) - 1);
+                            }
+                            $(this).removeClass("no-read").addClass("read");
+                            allcount();
+
+                        });
+
+                //计算总评论数
+                function allcount() {
+
+                    var messagenew = 0;
+                    var likenew = 0;
+                    var letternew = 0;
+                    if ($(".messagenew").text() != "")
+                        messagenew = parseInt($(".messagenew").text());
+                    if ($(".letternew").text() != "")
+                        letternew = parseInt($(".letternew").text());
+                    if ($(".likenew").text() != "")
+                        likenew = parseInt($(".likenew").text());
+                    if (messagenew + likenew + letternew == 0)
+                        $(".allnewcount").remove();
+                    else
+                        $(".allnewcount").text(messagenew + likenew + letternew);
+
+                }
+
+                //ajax
+                function doAjax(messId) {
+                    $.ajax({
+                        type: "POST",
+                        url: "profile",
+                        data: {
+                            messId: messId
+                        },
+                        dataType: "text",
+                    });
+                }
+
+            });

@@ -1,0 +1,188 @@
+//
+   Created by Win on 2017/3/17.
+extends layout
+block otherHead
+    link(rel="stylesheet",href="/css/pop.css",type="text/css")
+    link(rel="stylesheet",href="/css/bulidpop.css",type="text/css")
+    link(rel="stylesheet",href="/css/jquery.sinaEmotion.css",type="text/css")
+    style.
+        .abtn {
+            font-weight: 500;
+            border-radius: 2px;
+            float: right;
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            -webkit-user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            padding-top: 3px;
+            padding-bottom: 3px;
+        }
+
+        .form-group1 {
+            height: 20px;
+        }
+
+        .m-t-lg {
+            margin-bottom: 10px;
+        }
+
+        .ziti {
+            font-family: inherit;
+            font-size: 12px;
+            line-height: 1.1;
+        }
+
+        /* .m-t-none {
+                margin-top: 0;
+                font-size: 23px;
+            }*/
+        .m-t-lg {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        body {
+            font-size: 12px;
+        }
+
+        .m-b-lg {
+            margin-bottom: 15px;
+        }
+
+        .m-t-sm-return {
+            float: right;
+        }
+
+        .m-t-sm {
+            height: 50px;
+        }
+
+        .form-control {
+            resize: none;
+        }
+
+        .modal {
+            right: 0;
+            overflow: auto;
+            outline: 0;
+        }
+block body
+    body
+        include modal/newSongList
+        section#content(style="height: 100%")
+            section#bjax-el.vbox
+                section.scrollable.wrapper-lg
+                    div.row
+                        div.col-sm-8
+                            div.panel.wrapper-lg
+                                div.row
+                                    div.col-sm-5
+                                        img(src="/#{songList.listImg }",class="img-full m-b")
+                                    div.col-sm-7
+                                        h4.m-t-none.text-black=songList.listName
+                                        div.clearfix.m-b-lg
+                                            div.clear
+                                                a.text-muted(href="profile?userId=#{songList.userId}",style="padding: 15px 0px") By #{songList.userName}
+                                                small.block.text-muted(style="padding-top: 15px") #{songList.collectionNum} 收藏 / #{songList.playNum} 播放
+                                        div.m-b-lg
+                                            if songList.songList.length > 0
+                                                a(href="javascript:void(0);",id="#{songList.listId }",class="btn btn-sm btn-icon btn-info addMusicListToListAndPlay")
+                                                    i.icon-control-play
+                                                a(href="javascript:void(0);",id="#{songList.listId }",class="btn btn-rounded btn-sm btn-icon btn-default addMusicListToList")
+                                                    i.icon-plus
+                                            if userId && userId != songList.userId
+                                                a(href="javascript:void(0);",class="btn btn-rounded btn-sm btn-icon btn-default")
+                                                    i#collectionSL(class=collection ? "fa fa-heart" : "icon-heart")
+                                            a(href="#comment",class="btn btn-rounded btn-sm btn-icon btn-default")
+                                                i.icon-speech
+                                            if userId === songList.userId
+                                                a(href="editSongList?songListId=#{songList.listId }",class="btn btn-rounded btn-sm btn-icon btn-default")
+                                                    i.icon-note
+                                        include modal/addToSongList
+                                        if listKind.length > 0
+                                            div 标签：
+                                                each item in listKind
+                                                    a(href="javascript:void(0);",class="badge bg-light")=item.kindName
+                                div.m-t
+                                    p 介绍：#{songList.listDetail}
+                                h4.m-t-lg.m-b 歌曲列表
+                                ul.list-group.list-group-lg
+                                    if songList.songList
+                                        each song in songList.songList
+                                            li.list-group-item(id="#{song.songId}",value="#{song.songId}")
+                                                div.pull-right.m-l
+                                                    a.m-r-sm(href="javascript:void(0);")
+                                                        i.icon-plus
+                                                    a.m-r-sm.collect(href="javascript:void(0);")
+                                                        i.icon-heart(data-toggle="modal",data-target="#myModal")
+                                                    a(href="download/#{song.songId }")
+                                                        i.icon-cloud-download
+                                                a(href="javascript:void(0)",class="jp-play-me m-r-sm pull-left")
+                                                    i(id="#{song.songId}",class="icon-control-play text addMusicToListAndPlay")
+                                                    i(class="icon-control-pause text-active")
+                                                div.clear.text-ellipsis
+                                                    span=song.songName
+                                                    span.text-muted -- #{song.songTime}
+                                include modal/comment
+                        include modal/pageRight
+            a(href="javascript:void(0);",class="hide nav-off-screen-block",data-toggle="class:nav-off-screen,open",data-target="#nav,html")
+        script(src="/js/jquery.min.js")
+        script(src="/js/parsley/parsley.min.js")
+        script(src="/js/jquery.sinaEmotion.js")
+        script(src="/js/show-tran-emo.js")
+        <!-- Bootstrap -->
+        script(src="/js/bootstrap.js")
+        <!-- App -->
+        script(src="/js/app.js")
+        script(src="/js/slimscroll/jquery.slimscroll.min.js")
+
+        script(src="/js/app.plugin.js")
+        script(type="text/javascript",src="/js/jPlayer/jquery.jplayer.min.js")
+        script(type="text/javascript",src="/js/jPlayer/add-on/jplayer.playlist.min.js")
+        script(type="text/javascript",src="/js/jPlayer/demo.js")
+        script(type="text/javascript",src="/js/musicPlay.js")
+        script.
+            var loginUserId = "#{userId}";
+            var comType = "songList";
+            var replyId = "";
+            var replyName = "";
+
+            var mid = #{songList.listId};
+
+            $(function () {
+                $('#collectionSL').parent().click(function () {
+                    var u = 'collectionSongList';
+                    if ($(this).children().hasClass('fa'))
+                        u = 'cancelCollection';
+                    $.ajax({
+                        url: u,
+                        type: "post",
+                        data: {
+                            "userId": loginUserId,
+                            "slId": mid
+                        },
+                        success: function (ret) {
+                            if (ret) {
+                                if (u == 'collectionSongList') {
+                                    $('#collectionSL').attr('class', 'fa fa-heart');
+                                } else {
+                                    $('#collectionSL').attr('class', 'icon-heart');
+                                }
+                            } else {
+                                alert("操作失败");
+                            }
+                        }
+                    });
+                });
+
+                addPlayEvents();
+            });
+        include modal/collectionSongJS

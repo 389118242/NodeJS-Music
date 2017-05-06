@@ -1,0 +1,7 @@
+{
+  "url":"localhost",
+  "port":3306,
+  "database":"music",
+  "user": "root",
+  "password": "root"
+}

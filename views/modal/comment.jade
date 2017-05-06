@@ -1,0 +1,61 @@
+//
+   Created by Win on 2017/3/11.
+h4#comment.m-t-lg.m-b 评   论
+form
+    div.form-group
+        textarea.form-control(rows="5",placeholder="Type your comment" style="resize: none")
+    div.form-group(style="position:relative")
+        i#loadBQ(class="fa fa-smile-o face",style="font-size: 27px; margin-left: 13px; cursor: pointer")
+        button(type="submit",class="abtn btn-success") 评 论
+        div#temp(style="display:none")
+h4.m-t-lg.m-b 最新评论
+section(class="comment-list block",style="margin-top: 27px")
+div.text-center
+    ul.pagination.pagination-sm
+div(class="modal fade",id="reply",tabindex="-1",role="dialog",aria-labelledby="myModalLabel",aria-hidden="true")
+    div.modal-dialog
+        div.modal-content
+            div.modal-header
+                button(type="button",class="close",data-dismiss="modal",aria-hidden="true")!='&times;'
+                h4#myModalLabel.modal-title 回 复
+            div.modal-body
+                form
+                    div.form-group
+                        textarea(class="form-control",rows="5",placeholder="Type your comment",style="resize: none")
+                    div.form-group1
+                        i(class="fa fa-smile-o face",style="font-size: 27px; margin-left: 13px; cursor: pointer")
+                        button(type="submit",class="abtn btn-success") 评 论
+                        div(style="display:none")
+
+div(class="modal fade",id="noLogin",tabindex="-1",role="dialog",aria-labelledby="myModalLabel",aria-hidden="true")
+    div.modal-dialog
+        div.modal-content
+            div.modal-header
+                button(type="button",class="close",data-dismiss="modal",aria-hidden="true")!='&times;'
+                h4.modal-title ERROR
+            div.modal-body(style="color:red;") sorry...
+                br
+                br
+                !="&nbsp;&nbsp;&nbsp;您未登录！"
+
+div(class="modal fade",id="noContent",tabindex="-1",role="dialog",aria-labelledby="myModalLabel",aria-hidden="true")
+    div.modal-dialog
+        div.modal-content
+            div.modal-header
+                button(type="button",class="close",data-dismiss="modal",aria-hidden="true")!='&times;'
+                h4.modal-title ERROR
+            div.modal-body(style="color:red;") sorry...
+                br
+                br
+                !="&nbsp;&nbsp;&nbsp;您未输入任何内容！"
+
+div(class="modal fade",id="replyRet",tabindex="-1",role="dialog",aria-labelledby="myModalLabel",aria-hidden="true")
+    div.modal-dialog
+        div.modal-content
+            div.modal-header
+                button(type="button",class="close",data-dismiss="modal",aria-hidden="true")!='&times;'
+                h4.modal-title ERROR
+            div.modal-body(style="color:red;") sorry...
+                br
+                br
+                !="&nbsp;&nbsp;&nbsp;"

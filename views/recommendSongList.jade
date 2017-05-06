@@ -1,0 +1,102 @@
+//
+   Created by Win on 2017/3/7.
+extends layout
+block body
+    body
+        section.hbox.stretch
+            section#content
+                section.vbox
+                    section.scrollable
+                        div#masonry.pos-rlt.animated.fadeInUpBig
+                            div.item
+                                div.carousel.slide.auto(data-interval="3000")
+                                    div.carousel-inner
+                                        div.item.active
+                                            div(class="item-overlay opacity animated fadeInDown wrapper bg-info")
+                                                p.text-white N.01
+                                                div.center.text-center.m-t-n
+                                                    a(href="javascript:void(0);")
+                                                        i(id="#{rsl[0].listId }",class="icon-control-play i-2x addMusicListToListAndPlay")
+                                            div.bottom.wrapper.bg-info.gd
+                                                div.m-t.m-b
+                                                    a(href="songListDetail?songListId=#{rsl[0].listId }",class="b-b b-danger h2 text-u-c text-lt font-bold")=rsl[0].listName
+                                                p.hidden-xs=rsl[0].listDetail
+                                            a(href="songListDetail?songListId=#{rsl[0].listId }")
+                                                img(src="#{rsl[0].img }",alt="",class="img-full")
+                                        div.item
+                                            div(class="item-overlay opacity animated fadeInDown wrapper bg-info")
+                                                p.text-white N.02
+                                                div.center.text-center.m-t-n
+                                                    a(href="javascript:void(0);")
+                                                        i(id="#{rsl[1].listId }",class="icon-control-play i-2x addMusicListToListAndPlay")
+                                            div.bottom.wrapper.bg-info.gd
+                                                div.m-t.m-b
+                                                    a(href="songListDetail?songListId=#{rsl[1].listId }",class="b-b b-danger h2 text-u-c text-lt font-bold")=rsl[1].listName
+                                                p.hidden-xs=rsl[1].listDetail
+                                            a(href="songListDetail?songListId=#{rsl[1].listId }")
+                                                img(src="#{rsl[1].img }",alt="",class="img-full")
+                            div.item
+                                div(class="item-overlay gd animated fadeInUp wrapper bg-info")
+                                    p.text-white No.3
+                                    div.center.text-center.m-t-n
+                                        a(href="javascript:void(0);")
+                                            i(id="#{rsl[2].listId }",class="icon-control-play i-2x addMusicListToListAndPlay")
+                                div.bottom.gd.bg-info.wrapper
+                                    div.m-t.m-b
+                                        a(href="songListDetail?songListId=#{rsl[2].listId }",class="b-b b-info h4 text-u-c text-lt font-bold")=rsl[2].listName
+                                    p.hidden-xs=rsl[2].listDetail
+                                a(href="songListDetail?songListId=#{rsl[2].listId }")
+                                    img(src="#{rsl[2].img }",alt="",class="img-full")
+                            div.item
+                                div(class="item-overlay gd animated fadeInUp wrapper bg-info")
+                                    p.text-white No.4
+                                    div.center.text-center.m-t-n
+                                        a(href="javascript:void(0);")
+                                            i(id="#{rsl[3].listId }",class="icon-control-play i-2x addMusicListToListAndPlay")
+                                div.bottom.gd.bg-info.wrapper
+                                    div.m-t.m-b
+                                        a(href="songListDetail?songListId=#{rsl[3].listId }",class="b-b b-info h4 text-u-c text-lt font-bold")=rsl[3].listName
+                                    p.hidden-xs=rsl[3].listDetail
+                                a(href="songListDetail?songListId=#{rsl[3].listId }")
+                                    img(src="#{rsl[3].img }",alt="",class="img-full")
+                            div.item
+                                div(class="item-overlay gd animated fadeInUp wrapper bg-info")
+                                    p.text-white No.6
+                                    div.center.text-center.m-t-n
+                                        a(href="javascript:void(0);")
+                                            i(id="#{rsl[5].listId }",class="icon-control-play i-2x addMusicListToListAndPlay")
+                                div.bottom.gd.bg-info.wrapper
+                                    div.m-t.m-b
+                                        a(href="songListDetail?songListId=#{rsl[5].listId }",class="b-b b-info h4 text-u-c text-lt font-bold")=rsl[5].listName
+                                    p.hidden-xs=rsl[5].listDetail
+                                a(href="songListDetail?songListId=#{rsl[5].listId }")
+                                    img(src="#{rsl[5].img }",alt="",class="img-full")
+                            div.item
+                                div(class="item-overlay gd animated fadeInUp wrapper bg-info")
+                                    p.text-white No.5
+                                    div.center.text-center.m-t-n
+                                        a(href="javascript:void(0);")
+                                            i(id="#{rsl[4].listId }",class="icon-control-play i-2x addMusicListToListAndPlay")
+                                div.bottom.gd.bg-info.wrapper
+                                    div.m-t.m-b
+                                        a(href="songListDetail?songListId=#{rsl[4].listId }",class="b-b b-info h4 text-u-c text-lt font-bold")=rsl[4].listName
+                                a(href="songListDetail?songListId=#{rsl[4].listId }")
+                                    img(src="#{rsl[4].img }",alt="",class="img-full")
+                a(href="javascript:void(0);",class="hide nav-off-screen-block",data-toggle="class:nav-off-screen,open",data-target="#nav,html")
+        script(src="/js/jquery.min.js")
+        <!-- Bootstrap -->
+        script(src="/js/bootstrap.js")
+        <!-- App -->
+        script(src="/js/app.js")
+        script(src="/js/slimscroll/jquery.slimscroll.min.js")
+        script(src="/js/masonry/tiles.min.js")
+        script(src="/js/masonry/demo.js")
+        script(src="/js/app.plugin.js")
+        script(type="text/javascript",src="/js/jPlayer/jquery.jplayer.min.js")
+        script(type="text/javascript",src="/js/jPlayer/add-on/jplayer.playlist.min.js")
+        script(type="text/javascript",src="/js/jPlayer/demo.js")
+        script(type="text/javascript",src="/js/musicPlay.js")
+        script.
+            $(function () {
+                addPlayEvents();
+            });

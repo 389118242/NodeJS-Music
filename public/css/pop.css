@@ -1,0 +1,169 @@
+.modal {
+    bottom: auto;
+}
+
+div.m-layer div.zcnt {
+    padding: 0;
+    border: 1px solid #878787;
+    border-width: 0 1px 1px;
+    border-radius: 0 0 4px 4px;
+    background: #fff;
+    font-size: 12px;
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+div.m-layer .lyct-1 {
+    padding: 0;
+}
+
+.m-favgd {
+    overflow-y: auto;
+    height: 374px;
+}
+
+.m-favgd .tit {
+    padding: 10px 0 10px 25px;
+    background: #e6e6e6;
+    cursor: pointer;
+}
+
+.m-favgd .u-icn-33 {
+    margin-right: 10px;
+}
+
+.u-icn-33 {
+    width: 40px;
+    height: 40px;
+
+}
+
+.u-icn, .u-icn2, .u-icn3 {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.u-icn, .u-title-1 .out .icon {
+    background: 3px -493px url("../images/icon.png");
+
+}
+
+#songList {
+    padding-top: 3px;
+}
+
+.zcnt em, .zcnt i {
+    font-style: normal;
+    text-align: left;
+    font-size: inherit;
+}
+
+.m-favgd ul li {
+    padding: 6px 0 6px 35px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.m-favgd ul * {
+    cursor: pointer;
+}
+
+.zcnt li, s {
+    list-style: none;
+}
+
+.zcnt a {
+    text-decoration: none;
+    color: #333;
+}
+
+.m-favgd ul .avatar {
+    position: relative;
+    display: block;
+    width: 40px;
+    height: 40px;
+}
+
+.m-favgd ul .avatar img {
+    width: 40px;
+    height: 40px;
+}
+
+.zcnt img, .zcnt .txt {
+    border: 0;
+}
+
+.m-favgd ul .name {
+    margin-top: 2px;
+    margin-bottom: 8px;
+}
+
+.m-favgd ul p {
+    word-wrap: break-word;
+}
+
+.m-favgd ul * {
+    cursor: pointer;
+}
+
+.f-thide {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.f-cb:after {
+    clear: both;
+    content: '.';
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+div.m-layer {
+    position: absolute;
+    z-index: 9998;
+    width: 530px;
+    border-radius: 4px;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.8);
+    border: none;
+}
+
+.auto-1473474137786 {
+    position: absolute;
+    z-index: 1000;
+    border: 1px solid #aaa;
+    background: #fff;
+}
+
+div.m-layer .zbar {
+    position: relative;
+    z-index: 10;
+    border-radius: 4px 4px 0 0;
+    background: #4cb6cb;
+}
+
+div.m-layer .zttl {
+    margin: 0;
+    height: 38px;
+    line-height: 38px;
+    padding-left: 18px;
+    border-radius: 3px 3px 0 0;
+    font-weight: bold;
+    font-size: 14px;
+    color: #fff;
+    background-position: 50% 0;
+    _background-image: none;
+}
+
+.m-favgd ul .left {
+    display: inline;
+    float: left;
+    margin-left: -50px;
+    overflow: hidden;
+    width: 40px;
+}
+
+div.m-layer-w2 {
+    width: 480px;
+}

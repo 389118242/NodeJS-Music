@@ -1,0 +1,43 @@
+extends layout
+
+block body
+    body.bg-light.dk.scrollable
+        section#content
+            .row.m-n
+                .col-sm-4.col-sm-offset-4
+                    .text-center.m-b-lg
+                        h1(class="h text-white animated fadeInDownBig")=error.status
+                        h2=error.message
+                        //pre=error.stack
+                    .list-group.auto.m-b-sm.m-b-lg
+                        a.list-group-item(href="/Music")
+                            i(class="fa fa-chevron-right icon-muted")
+                            i(class="fa fa-fw fa-home icon-muted")
+                            =" Goto homepage"
+                        a.list-group-item(href="javascript:void(0);")
+                            i(class="fa fa-chevron-right icon-muted")
+                            i(class="fa fa-fw fa-question icon-muted")
+                            =" Send us a tip"
+                        a.list-group-item(href="javascript:void(0);")
+                            i(class="fa fa-chevron-right icon-muted")
+                            span(class="badge bg-info lt") 021-215-584
+                            i(class="fa fa-fw fa-phone icon-muted")
+                            =" Call us"
+
+        footer#footer
+            div(class="text-center padder clearfix")
+                p
+                    small Web app framework base on Bootstrap
+                        br
+                        ="© 2016"
+
+        script(src="js/jquery.min.js")
+        <!-- Bootstrap -->
+        script(src="js/bootstrap.js")
+        <!-- App -->
+        script(src="js/app.js")
+        script(src="js/slimscroll/jquery.slimscroll.min.js")
+        script(src="js/app.plugin.js")
+        script(type="text/javascript",src="js/jPlayer/jquery.jplayer.min.js")
+        script(type="text/javascript",src="js/jPlayer/add-on/jplayer.playlist.min.js")
+        script(type="text/javascript",src="js/jPlayer/demo.js")

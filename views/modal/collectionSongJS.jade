@@ -1,0 +1,77 @@
+//
+   Created by Win on 2017/4/22.
+script.
+    $(function () {
+        //点击收藏歌曲把歌曲id存入我的歌单弹框内
+        $('.collect').click(function () {
+            $('#songList').val('');
+            var songid;
+            songid = $(this).parents('li').attr('value');
+            $('#songList').val(songid);
+        });
+        //点击收藏，收藏到歌单
+        $('.collect').click(function () {
+            $('li[name=listId]').remove();
+            $('#mylike').hide();
+            $.post("getSongList", {}, function (data, textStatus) {
+                var songListList = data;
+                if (songListList.length == 0) {
+                    alert("抱歉，您未登录！");
+                    return;
+                }
+                $.each(songListList, function (i, list) {
+                    var $li = $('#mylike').clone();
+                    $li.show();
+                    $li.appendTo($('#listpop'));
+                    $li.attr("id", list.listId);
+                    $li.attr("name", "listId");
+                    $li.find("img").attr("src", "/" + list.listImg);
+                    $li.children().children('p').children().text(list.listName);
+                    $li.children().children('p').eq(1).text(list.num + "首");
+                });
+                //点击歌单用ajax传送
+                $('li[name=listId]').click(function () {
+                    $.post("collectSong", {
+                        //歌曲要收藏到的歌单
+                        collectListId: $(this).attr('id'),
+                        songId: $('#songList').val()
+                    }, function (data) {
+                        if (data === '0')
+                            alert("请重新登录");
+                        else if (data === "-1")
+                            alert("歌单中不可重复收藏");
+                        $("#myModal").modal('hide');
+                    });
+                })
+            });
+
+        });
+        //新建歌单 采用ajax
+        $('#new').click(function () {
+            var listName = $('input[name=listName]').val();
+            if (listName.trim() === '') {
+                $("#newbulid").find(".err-mess").text("歌单名不能为空！").removeClass("f-vhide");
+                return;
+            }
+            $.post("addSongTosongList", {
+                listName: listName,
+                songId: $('#songList').val()
+            }, function (data) {
+                if (data === '1')
+                    alert("创建并收藏成功");
+                else if (data === '0')
+                    alert("请重新登录");
+                else if (data === "-1")
+                    alert("创建歌单失败");
+                else if (data === "-2")
+                    alert("收藏歌曲失败");
+                $("#newbulid").modal('hide');
+
+            });
+        });
+
+        $("#newbulid").on("hidden.bs.modal", function () {
+            $('input[name=listName]').val("");
+            $("#newbulid").find(".err-mess").addClass("f-vhide");
+        });
+    });

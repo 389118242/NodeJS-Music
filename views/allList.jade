@@ -1,0 +1,136 @@
+//
+   Created by Win on 2017/3/3.
+extends layout
+block otherHead
+block body
+    body
+        section.hbox.stretch
+            section#content
+                section.vbox
+                    section#bjax-target.w-f-md(style="bottom:0;")
+                        section.hbox.stretch
+                            aside#sidebar.aside.bg-light.dk
+                                section.vbox.animated.fadeInUp
+                                    section.scrollable.hover
+                                        div(class="list-group no-radius no-border no-bg m-t-n-xxs m-b-none auto")
+                                            a(href="javascript:void(0);",id="0",class="list-group-item active") 全部
+                                                each item in listKinds
+                                                    a(href="javascript:void(0);",id="#{item.kindId}",class="list-group-item")=item.kindName
+                            section
+                                section.vbox
+                                    section.scrollable.padder-lg
+                                        h2.font-thin.m-b 全部
+                                        div.row.row-sm
+                                        ul.pagination.pagination
+
+                a(href="#",class="hide nav-off-screen-block",data-toggle="class:nav-off-screen,open",data-target="#nav,html")
+
+        script(src="/js/jquery.min.js")
+        <!-- Bootstrap -->
+        script(src="/js/bootstrap.js")
+        <!-- App -->
+        script(src="/js/app.js")
+        script(src="/js/slimscroll/jquery.slimscroll.min.js")
+        script(src="/js/app.plugin.js")
+        script(type="text/javascript",src="/js/jPlayer/jquery.jplayer.min.js")
+        script(type="text/javascript",src="/js/jPlayer/add-on/jplayer.playlist.min.js")
+        script(type="text/javascript",src="/js/jPlayer/demo.js")
+        script(type="text/javascript",src="/js/musicPlay.js")
+        script.
+            var presentPage = 1;
+            var clickIndex = 0;
+            var totalPage = 1;
+            var presentKindId = 0;
+            var addEvents = function (total) {
+                $('ul.pagination.pagination li').click(
+                    function () {
+                        var text = $(this).children().html();
+                        if (isNaN(text)) { //不是数字
+                            if ($(this).index() == 0 && presentPage != 1) {
+                                getSongList(presentKindId, presentPage - 1);
+                            } else if ($(this).index() == total - 1
+                                && presentPage != totalPage) {
+                                getSongList(presentKindId, presentPage + 1);
+                            }
+                        } else {//数字
+                            getSongList(presentKindId, parseInt(text));
+                        }
+                    });
+            }
+            var getSongList = function (id, page) {
+                presentPage = page;
+                $
+                    .ajax({
+                        url: "getSongListByKind",
+                        type: "post",
+                        data: {
+                            "kindId": id,
+                            "page": page
+                        },
+                        dataType: "json",
+                        success: function (ret) {
+                            var $p = $('.row.row-sm');
+                            $p.children().remove();
+                            var items = ret.songList;
+                            for (var i = 0; i < items.length; i++) {
+                                $p
+                                    .append('<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">'
+                                        + '<div class="item">'
+                                        + '<div class="pos-rlt">'
+                                        + '<div class="item-overlay opacity r r-2x bg-black">'
+                                        + '<div class="center text-center m-t-n">'
+                                        + '<a href="javascript:;"><i id="' + items[i].listId + '" class="fa fa-play-circle i-2x addMusicListToListAndPlay"></i></a>'
+                                        + '</div></div>'
+                                        + '<a href="javascript:;"><img src="/' + items[i].listImg + '" ' +
+                                        'alt="" class="r r-2x img-full"></a>'
+                                        + '</div>'
+                                        + '<div class="padder-v">'
+                                        + '<a href="songListDetail?songListId='
+                                        + items[i].listId
+                                        + '" class="text-ellipsis">'
+                                        + items[i].listName
+                                        + '</a>'
+                                        + '<a href="profile?userId='
+                                        + items[i].userId
+                                        + '" class="text-ellipsis text-xs text-muted">'
+                                        + items[i].userName
+                                        + '</a> '
+                                        + '</div> '
+                                        + '</div>' + '</div>');
+                            }
+                            addPlayEvents();
+                            var bp = ret.bp;
+                            var ep = ret.ep;
+                            $('.pagination.pagination').html('');
+                            if (ep > bp) {
+                                $('.pagination.pagination')
+                                    .html(
+                                        '<li><a href="javascript:;"><i ' +
+                                        'class="fa fa-chevron-left"></i></a></li>'
+                                        + '<li><a href="javascript:;"><i ' +
+                                        'class="fa fa-chevron-right"></i></a></li>');
+                                for (var i = bp; i < ep + 1; i++) {
+                                    if (i == presentPage)
+                                        $('.pagination.pagination li:last').before(
+                                            '<li class="active"><a href="javascript:;">'
+                                            + i + '</a></li>');
+                                    else
+                                        $('.pagination.pagination  li:last').before(
+                                            '<li><a href="javascript:;">'
+                                            + i + '</a></li>');
+                                }
+                            }
+                            totalPage = ret.totalPage;
+                            addEvents(ep - bp + 3);
+                        }
+                    });
+            }
+            $('.list-group-item').click(function () {
+                $(this).addClass("active").siblings().removeClass("active");
+                presentKindId = $(this).attr("id");
+                $('.scrollable.padder-lg h2').text($(this).text());
+                getSongList(presentKindId, 1);
+            });
+            $(function () {
+                $('.list-group-item').eq(0).trigger("click");
+            });
