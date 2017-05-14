@@ -258,12 +258,13 @@ $(document).ready(function () {
         }
         $.lrc.init(lrc, index);
         //点击开始方法调用lrc.start歌词方法 返回时间time
-        if (lrc !== undefined && lrc.trim() !== "") {
+        // lrc != undefined <==> lrc != null
+        if (lrc != undefined && lrc.trim() !== "") {
             $.lrc.start(function () {
                 return mTime;
             });
         } else {
-            $("#lrc_content ul").html("<li>很抱歉，没有找到歌词</li><li></li><li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---逗比的管理员</li>");
+            $("#lrc_content ul").html("<li>很抱歉，没有找到歌词</li>");
         }
     });
 
