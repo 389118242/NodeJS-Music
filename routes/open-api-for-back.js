@@ -15,6 +15,7 @@ router.post("/reload", function (req, resp) {
 
 var multiparty = require("multiparty");
 var images = require("images");
+var fs = require("fs");
 var detail_map = {"L": {"W": 400, "H": 400}, "M": {"W": 200, "H": 400}, "S": {"W": 256, "H": 256}};
 router.post("/alterRecommendSongList", function (req, resp) {
     var form = new multiparty.Form({uploadDir: "public/img-tmp"});
@@ -34,6 +35,7 @@ router.post("/alterRecommendSongList", function (req, resp) {
                 var fileName = 'rc_' + index + '.jpg';
                 var widthAndHeight = detail_map[detail];
                 images(tmp.path).resize(widthAndHeight.W, widthAndHeight.H).save("public/rcImg/" + fileName);
+                fs.unlinkSync(tmp.path);
                 sql += ",img = ?";
                 param.push("/rcImg/" + fileName);
             }
