@@ -18,7 +18,11 @@
         playIndex: -1,
         //初始化歌词
         init: function (txt, index) {
-            if (typeof(txt) != 'string' || txt.length < 1) return;
+            if (typeof(txt) != 'string' || txt.length < 1) {
+                $('#' + this.prefixid + '_list').html("<li>很抱歉，没有找到歌词</li>");
+                this.playIndex = index;
+                return;
+            }
             if (this.playIndex == index) {
                 return;
             }
@@ -228,7 +232,7 @@ $(document).ready(function () {
     $(document).on($.jPlayer.event.timeupdate, myPlaylist.cssSelector.jPlayer, function (event) {
         mTime = event.jPlayer.status.currentTime;
         if (event.jPlayer.status.remaining * 2 < mTime) {
-            if(!isUpdatePlayNum)
+            if (!isUpdatePlayNum)
                 updateSongPlayNum();
         }
     });
@@ -263,8 +267,6 @@ $(document).ready(function () {
             $.lrc.start(function () {
                 return mTime;
             });
-        } else {
-            $("#lrc_content ul").html("<li>很抱歉，没有找到歌词</li>");
         }
     });
 

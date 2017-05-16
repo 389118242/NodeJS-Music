@@ -2,6 +2,7 @@
    Created by Win on 2017/3/2.
 extends layout
 block otherHead
+    link(rel="stylesheet",href="/css/pop.css",type="text/css")
     link(rel="stylesheet",href="/css/bulidpop.css",type="text/css")
     link(rel="stylesheet",href="/css/jquery.sinaEmotion.css",type="text/css")
     style.
@@ -92,64 +93,83 @@ block otherHead
                     $('#mylike').hide();
                     $.post("getSongList", {}, function (data, textStatus) {
                         var songListList = data;
+                        if (songListList.length == 0) {
+                            alert("抱歉，您未登录！");
+                            return;
+                        }
                         $.each(songListList, function (i, list) {
                             var $li = $('#mylike').clone();
                             $li.show();
                             $li.appendTo($('#listpop'));
                             $li.attr("id", list.listId);
                             $li.attr("name", "listId");
-                            $li.find('a').eq(0).children().attr("src",
-                                list.listImg);
-                            $li.children().children('p').children().text(
-                                list.listName);
-                            $li.children().children('p').eq(1).text(
-                                list.songsList.length + "首");
-                            //点击歌单用ajax传送
-                            $('li[name=listId]').click(function () {
-                                $.post("collectSong", {
-                                    //歌曲要收藏到的歌单
-                                    collectListId: $(this).attr('id'),
-                                    songId: $('#songList').val()
-                                });
-
-                            })
+                            $li.find("img").attr("src", "/" + list.listImg);
+                            $li.children().children('p').children().text(list.listName);
+                            $li.children().children('p').eq(1).text(list.num + "首");
+                        });
+                        //点击歌单用ajax传送
+                        $('li[name=listId]').click(function () {
+                            $.post("collectSong", {
+                                //歌曲要收藏到的歌单
+                                collectListId: $(this).attr('id'),
+                                songId: $('#songList').val()
+                            }, function (data) {
+                                if (data === '0')
+                                    alert("请重新登录");
+                                else if (data === "-1")
+                                    alert("歌单中不可重复收藏");
+                                $("#myModal").modal('hide');
+                            });
                         })
-
                     });
 
                 });
 
             //新建歌单 采用ajax
             $('#new').click(function () {
+                var listName = $('input[name=listName]').val();
+                if (listName.trim() === '') {
+                    $("#newbulid").find(".err-mess").text("歌单名不能为空！").removeClass("f-vhide");
+                    return;
+                }
                 $.post("addSongTosongList", {
-                        listName: $('input[name=listName]').val(),
-                        songId: $('#songList').val()
-                    }, function (data, textStatus) {
-                        alert("创建,添加成功");
-                    }
-                );
+                    listName: listName,
+                    songId: $('#songList').val()
+                }, function (data) {
+                    if (data === '1')
+                        alert("创建并收藏成功");
+                    else if (data === '0')
+                        alert("请重新登录");
+                    else if (data === "-1")
+                        alert("创建歌单失败");
+                    else if (data === "-2")
+                        alert("收藏歌曲失败");
+                    $("#newbulid").modal('hide');
 
-            })
+                });
+            });
+
+            $("#newbulid").on("hidden.bs.modal", function () {
+                $('input[name=listName]').val("");
+                $("#newbulid").find(".err-mess").addClass("f-vhide");
+            });
 
         })
 block body
     body
         <!-- 新建歌单弹框 -->
         div(role="dialog",tabindex="-1",aria-labelledby="myModalLabel",aria-hidden="true",id="newbulid",style="overflow-y: auto;top: 20%;bottom: 40.9%; left: 30%;",class="modal fade auto-1473594539484 m-layer z-show m-layer-w2")
-            form(data-validate="parsley",method="POST")
-                div#auto-id-rZVKAsR9HnemIBlD.zbar
-                    div.zttl 新建歌单
-                div.zcnt
-                    div#auto-id-I7km2EPlFaoE7uW3(class="lyct m-crgd f-cb f-tc")
-                        p 歌单名：
-                            input(data-required="true",id="auto-id-LSZQ38VTqM5s7eWT",class="u-txt j-flag",type="text",name="listName")
-                        div.u-err.f-vhide.j-flag
-                            i.u-icn.u-icn-25
-                            ="错误提示"
-                        p.tip.s-fc4 可通过“收藏”将音乐添加到新歌单中
-                        button#new(type="submit") 新建
-                        button#cancel(data-dismiss="modal") 取消
-                button(type="button",class="close zcls",data-dismiss="modal",aria-hidden="true",id="auto-id-gZz1lykTByivR2Bd",title="关闭窗体") ×
+            div#auto-id-rZVKAsR9HnemIBlD.zbar
+                div.zttl 新建歌单
+            div.zcnt(style="border:none;")
+                div#auto-id-I7km2EPlFaoE7uW3(class="lyct m-crgd f-cb f-tc")
+                    p 歌单名：
+                        input(id="auto-id-LSZQ38VTqM5s7eWT",class="u-txt j-flag",type="text",name="listName")
+                    div.u-err.f-vhide.j-flag.err-mess
+                    p.tip.s-fc4 可通过“收藏”将音乐添加到新歌单中
+                    button#new(class="btn btn-s-md btn-info btn-rounded",style="margin-left:27px") 新建
+                    button#cancel(data-dismiss="modal",class="btn btn-s-md btn-info btn-rounded") 取消
+            button(type="button",class="close zcls",data-dismiss="modal",aria-hidden="true",id="auto-id-gZz1lykTByivR2Bd",title="关闭窗体") ×
 
         section#content(style="height: 100%")
             section#bjax-el.vbox

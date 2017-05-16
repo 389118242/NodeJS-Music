@@ -14,7 +14,7 @@ exports.selectSongsOfTop9 = function (fn) {
 
 exports.selectRecommendSongs = function (index, fn) {
     var conn = utils.getConnection();
-    conn.query("select so.songId,so.songName,so.singerId,s.singerName,a.resourceId from song so,singer s,album a,recommend_song r where so.singerId = s.singerId and a.albumId = so.albumId and so.songId = r.songId order by r.sort,r.id limit ?,8", [(index - 1) * 10], utils.selectResultHandlerAndGenerateImg(fn));
+    conn.query("select so.songId,so.songName,so.singerId,s.singerName,a.resourceId from song so,singer s,album a,recommend_song r where so.singerId = s.singerId and a.albumId = so.albumId and so.songId = r.songId order by r.sort,r.id limit ?,12", [(index - 1) * 12], utils.selectResultHandlerAndGenerateImg(fn));
     utils.endConnection(conn);
 }
 
