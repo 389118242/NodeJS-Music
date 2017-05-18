@@ -159,6 +159,9 @@ $('button[type=submit][class="abtn btn-success"]').bind({
                 } else if (ret == -2) {
                     $('#replyRet div.modal-body').append("您的账号被冻结，无评论权限");
                 }
+                if(ret != 1)
+                    $('#replyRet').modal();
+                // TODO 该弹框隐藏后，清除错误信息
             }
 
         });

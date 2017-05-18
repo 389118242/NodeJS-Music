@@ -229,6 +229,7 @@ block otherHead
                     contentType: "application/json; charset=utf-8",
                     success: function (ret) {
                         alert(ret == "s" ? "修改成功" : "修改失败");
+                        location.reload();
                     }
                 });
             });

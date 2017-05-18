@@ -9,10 +9,11 @@ var utils = require("../utils");
 router.post("/addComment", function (req, resp, next) {
     var param = req.body;
     var userId = req.session.userId;
-    if (userId === null) {
+    if (userId == null) {
         resp.send("-1");
         return;
     }
+    // TODO 冻结账号判断
     var type = param.type;
     var id = param.id;
     var comContent = param.comContent;
@@ -21,8 +22,8 @@ router.post("/addComment", function (req, resp, next) {
     if (pId)
         comm.parentId = pId;
     var t_map = {song: "song", album: "alb", songList: "sl"};
-    type = t_map[type];
-    commentDao.insert(type, id, comm, function (er) {
+    var mapper = t_map[type];
+    commentDao.insert(mapper, id, comm, function (er) {
         resp.send(er + "");
         if (type === "songList") {
             sendCommentMess(id, comContent, userId);
